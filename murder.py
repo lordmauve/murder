@@ -54,8 +54,9 @@ current_deck = deck1
 
 viewport = (0, 0)
 
-level_w = max(d.width for d in decks)
-
+for d in decks:
+    d.level_width = d.width
+deck1.level_width -= 312
 
 
 def draw():
@@ -102,27 +103,40 @@ def draw_deck():
 
     for a in get_actors():
         if billy.colliderect(a):
-            screen.draw.text(
-                'Talk to %s' % a.name,
-                midtop=(WIDTH // 2, 220),
-                fontname=FONT,
-                fontsize=20,
-                color='#cccccc'
-            )
+            draw_caption('Talk to %s' % a.name)
             break
+    else:
+        if is_by_lift():
+            draw_caption('Use lift')
 
+
+def draw_caption(caption):
+    screen.draw.text(
+        caption,
+        midtop=(WIDTH // 2, 220),
+        fontname=FONT,
+        fontsize=20,
+        color='#cccccc'
+    )
 
 
 def update():
-    global frame
+    global frame, viewport
     if keyboard.left:
         billy.real_x = max(30, billy.real_x - MAX_WALK)
         billy.image = 'billy-standing-l'
     elif keyboard.right:
-        billy.real_x = min(level_w - 30, billy.real_x + MAX_WALK)
+        billy.real_x = min(current_deck.level_width - 30, billy.real_x + MAX_WALK)
         billy.image = 'billy-standing-r'
-    else:
-        billy.image = 'billy-standing'
+
+    vx, vy = viewport
+    l_edge = WIDTH // 3
+    r_edge = l_edge * 2
+    if billy.real_x > vx + r_edge:
+        vx = min(billy.real_x - r_edge, current_deck.width - WIDTH)
+    if billy.real_x < vx + l_edge:
+        vx = max(billy.real_x - l_edge, 0)
+    viewport = vx, vy
 
 
 def on_mouse_move(rel, buttons):
@@ -136,6 +150,11 @@ def on_mouse_move(rel, buttons):
 
 
 TWEEN = 'accel_decel'
+
+
+def is_by_lift():
+    return 50 < billy.real_x < 120
+
 
 def on_key_down(key):
     global deck_num, current_deck, viewport
@@ -153,5 +172,11 @@ def on_key_down(key):
             animate(lift, y=100 * deck_num + 100, tween=TWEEN)
     else:
         if key == keys.UP:
-            if 50 < billy.real_x < 100:
-                billy.in_lift = True
+            billy.image = 'billy-back'
+
+def on_key_up(key):
+    if key == keys.UP:
+        if is_by_lift():
+            billy.in_lift = True
+    else:
+        billy.image = 'billy-standing'
