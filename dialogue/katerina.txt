@@ -1,0 +1,19 @@
+[enter]
+LEARN: Night Air
+YOU: Good evening, madam.
+THEY: Buena noches.
+
+[Night Air]
+YOU: Aren't you cold, madam?
+THEY:
+   I am all right for now, thank you.
+
+   Señor Baines... it is all too sad.
+LEARN: Buster Baines
+
+[Buster Baines]
+YOU: It is sad.
+
+[Bye]
+THEY: See you later, señor.
+EXIT:

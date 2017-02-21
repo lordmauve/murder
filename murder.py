@@ -22,8 +22,6 @@ def load_dialogue(character):
     with path.open(encoding='utf8') as f:
         for lineno, l in enumerate(f, start=1):
             l = l.strip()
-            if not l:
-                continue
             mo = re.match(r'^\[(.*)\]$', l)
             if mo:
                 if key:
@@ -34,7 +32,7 @@ def load_dialogue(character):
             mo = re.match('^([A-Z]+): *(.*)', l)
             if mo:
                 action = mo.group(1)
-                if action not in ('YOU', 'THEY', 'EXIT'):
+                if action not in ('YOU', 'THEY', 'EXIT', 'LEARN'):
                     raise ValueError(
                         'invalid key %r, %s, line %d' % (action, path, lineno)
                     )
@@ -48,7 +46,6 @@ def load_dialogue(character):
 
     if key:
         patterns[key] = steps
-        steps = []
 
     out_patterns = OrderedDict()
     for k, v in patterns.items():
@@ -56,7 +53,11 @@ def load_dialogue(character):
         parts = k.split('.')
         for path in parts[:-1]:
             pats = pats.setdefault(path, OrderedDict())
-        pats[parts[-1]] = v
+        steps = []
+        for action, text in v:
+            text = re.sub(r'(?<!\n)\n(?!\n)', ' ', text.strip())
+            steps.append((action, text))
+        pats[parts[-1]] = steps
 
     return out_patterns
 
@@ -88,20 +89,18 @@ kitty.name = "Kitty Morgan"
 cheshire = Actor('lord-cheshire', anchor=CANC)
 cheshire.real_x = 400
 cheshire.name = "Lord Cheshire"
-cheshire.dialogue = load_dialogue('cheshire')
 
 manx = Actor('doctor-manx', anchor=CANC)
 manx.real_x = 1200
 manx.name = "Doctor Manx"
 
-buster = Actor('buster-baines', anchor=CANC)
-buster.real_x = 400
-buster.name = "Buster Bains"
+katerina = Actor('katerina-la-gata', anchor=CANC)
+katerina.real_x = 400
+katerina.name = "Katerina la Gata"
 
 calico = Actor('calico-croker', anchor=CANC)
 calico.real_x = 500
 calico.name = "Calico Croker"
-
 
 lift = Actor('lift', pos=(80, 100))
 
@@ -119,7 +118,7 @@ billy.dialogue_with = None
 billy.knows = {'Bye'}  # Start only knowing how to end a conversation
 
 decks = [deck1, deck2, deck3, deck4]
-actors = [[buster], [cheshire, manx], [calico], [kitty]]
+actors = [[katerina], [cheshire, manx], [calico], [kitty]]
 
 deck_num = 0
 current_deck = deck1
@@ -129,6 +128,22 @@ viewport = (0, 0)
 for d in decks:
     d.level_width = d.width
 deck1.level_width -= 312
+
+
+def reload_dialogue():
+    """Load all dialogue.
+
+    Press F5 to reload all when changed.
+
+    """
+    cheshire.dialogue = load_dialogue('cheshire')
+    katerina.dialogue = load_dialogue('katerina')
+    calico.dialogue = load_dialogue('calico')
+    if billy.dialogue_with:
+        start_dialogue(billy.dialogue_with)
+
+
+reload_dialogue()
 
 
 def draw():
@@ -199,6 +214,11 @@ def draw_caption(caption):
 
 
 def update():
+    if not billy.dialogue_with:
+        move_billy()
+
+
+def move_billy():
     global frame, viewport
     if keyboard.left:
         billy.real_x = max(30, billy.real_x - MAX_WALK)
@@ -217,16 +237,6 @@ def update():
     viewport = vx, vy
 
 
-def on_mouse_move(rel, buttons):
-    global viewport
-    if mouse.LEFT not in buttons:
-        return
-    vx, vy = viewport
-    dx, dy = rel
-    vx = max(min(vx - dx, level_w - WIDTH), 0)
-    viewport = vx, vy
-
-
 TWEEN = 'accel_decel'
 
 
@@ -236,6 +246,9 @@ def is_by_lift():
 
 
 def on_key_down(key):
+    if key == keys.F5:
+        reload_dialogue()
+        return
     if billy.dialogue_with:
         on_key_down_dialogue(key)
     else:
@@ -273,6 +286,7 @@ def on_key_down_dialogue(key):
 class DialogueChoices:
     def __init__(self, options, parent=None):
         self.options = options
+        self.done = options.setdefault('__done', set())
         self.parent = parent
 
     def start(self):
@@ -293,7 +307,10 @@ class DialogueChoices:
     def draw(self):
         for i, opt in enumerate(self.choices):
             key, steps = opt
-            color = '#cccccc' if i != self.selected else 'white'
+            if key in self.done:
+                color = '#ff4444' if i == self.selected else '#cc0000'
+            else:
+                color = '#cccccc' if i != self.selected else 'white'
             screen.draw.text(
                 key,
                 bottomleft=(30, 230 + 30 * i),
@@ -301,6 +318,14 @@ class DialogueChoices:
                 fontsize=20,
                 color=color
             )
+            if key in self.done:
+                screen.draw.text(
+                    '-' * len(key),
+                    bottomleft=(30, 230 + 30 * i),
+                    fontname=FONT,
+                    fontsize=20,
+                    color=color
+                )
 
     def up(self):
         self.selected = (self.selected - 1) % len(self.choices)
@@ -309,7 +334,9 @@ class DialogueChoices:
         self.selected = (self.selected + 1) % len(self.choices)
 
     def select(self):
-        _, steps = self.choices[self.selected]
+        key, steps = self.choices[self.selected]
+        if key not in ('Bye', 'Back'):
+            self.done.add(key)
         self.play_dialogue(steps)
 
     def play_dialogue(self, steps):
@@ -359,10 +386,17 @@ class DialogueChat:
 
     def select(self):
         """Proceed to the next step."""
-        try:
-            self.action, self.text = self.steps.pop(0)
-        except IndexError:
-            self.parent.show()
+        while True:
+            try:
+                self.action, self.text = self.steps.pop(0)
+            except IndexError:
+                self.parent.show()
+                return
+            if self.action == 'LEARN':
+                billy.knows.add(self.text)
+                continue
+            break
+
         if self.action == 'EXIT':
             billy.dialogue_menu = None
             billy.dialogue_with = None
