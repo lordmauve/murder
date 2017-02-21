@@ -1,0 +1,12 @@
+[enter]
+THEY: Ah, my good man, could you fetch me a drink?
+
+[Kitty Morgan]
+YOU: Do you know Kitty Morgan?
+THEY:
+   Ah, yes. The name rings a bell. I can't recall where from.
+   Perhaps it will come to me if you ask me later.
+
+[Bye]
+THEY: Very well. If you could bring me a gin and tonic... thanks.
+EXIT:
