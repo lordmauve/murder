@@ -70,17 +70,21 @@ FONT = "travelling_typewriter"
 # All NPCs are anchored at center bottom
 CANC = ('center', 'bottom')
 
+
 deck1 = Actor('deck1')
 deck1.name = "On Deck"
 
 deck2 = Actor('deck2')
 deck2.name = "Lounge"
 
-deck3 = Actor('deck3')
+deck3 = Actor('deck3-start')
 deck3.name = "First-class Cabins"
 
 deck4 = Actor('deck4')
 deck4.name = "Second-class Cabins"
+
+baines_room = Actor('baines-room')
+baines_room.name = "Cabin 35"
 
 kitty = Actor('kitty-morgan', anchor=CANC)
 kitty.real_x = 500
@@ -102,7 +106,11 @@ calico = Actor('calico-croker', anchor=CANC)
 calico.real_x = 500
 calico.name = "Calico Croker"
 
-lift = Actor('lift', pos=(80, 100))
+captain = Actor('captain', anchor=CANC)
+captain.real_x = 250
+captain.name = "The Captain"
+
+lift = Actor('lift', pos=(80, 300))
 
 
 # Maximum walk speed
@@ -118,14 +126,76 @@ billy.dialogue_with = None
 billy.knows = {'Bye'}  # Start only knowing how to end a conversation
 
 decks = [deck1, deck2, deck3, deck4]
-actors = [[katerina], [cheshire, manx], [calico], [kitty]]
+deck1.actors = [katerina]
+deck2.actors = [cheshire, manx]
+deck3.actors = [calico, captain]
+deck4.actors = [kitty]
+baines_room.actors = []
 
-deck_num = 0
-current_deck = deck1
+
+class Door:
+    W = 35
+
+    def __init__(self, pos, dest, dest_pos, caption=None):
+        self.pos = pos
+        self.dest = dest
+        self.dest_pos = dest_pos
+        self._caption = caption
+
+    def is_next_to(self):
+        return self.pos - self.W < billy.real_x < self.pos + self.W
+
+    def caption(self):
+        return self._caption or "Enter {}".format(self.dest.name)
+
+    def use(self):
+        enter(self.dest, self.dest_pos)
+
+
+def enter(deck, pos=None):
+    """Enter the given deck/room at the given x pos."""
+    global current_deck, viewport
+    current_deck = deck
+    if pos is not None:
+        billy.real_x = pos
+    if current_deck.width < WIDTH:
+        vx = -(WIDTH - current_deck.width) // 2
+    else:
+        vx = min(current_deck.width - WIDTH, max(billy.real_x - WIDTH // 2, 0))
+    viewport = vx, viewport[1]
+
+
+class Lift:
+    W = 35
+
+    def __init__(self, pos=85):
+        self.pos = pos
+
+    def is_next_to(self):
+        return self.pos - self.W < billy.real_x < self.pos + self.W
+
+    def caption(self):
+        return "Use lift"
+
+    def use(self):
+        billy.in_lift = True
+
+
+deck1.objects = [Lift()]
+deck2.objects = [Lift()]
+deck3.objects = [Lift(), Door(310, baines_room, 55)]
+deck4.objects = [Lift()]
+baines_room.objects = [Door(55, deck3, 310, "To the corridor")]
+
+
+all_deck_objects = [deck1, deck2, deck3, deck4, baines_room]
+
+deck_num = 2
+current_deck = deck3
 
 viewport = (0, 0)
 
-for d in decks:
+for d in all_deck_objects:
     d.level_width = d.width
 deck1.level_width -= 312
 
@@ -139,6 +209,7 @@ def reload_dialogue():
     cheshire.dialogue = load_dialogue('cheshire')
     katerina.dialogue = load_dialogue('katerina')
     calico.dialogue = load_dialogue('calico')
+    captain.dialogue = load_dialogue('captain')
     if billy.dialogue_with:
         start_dialogue(billy.dialogue_with)
 
@@ -165,17 +236,12 @@ def draw_lift():
     )
 
 
-def get_actors():
-    """Get a list of the actors on the current deck."""
-    return actors[deck_num]
-
-
 def draw_deck():
     vx, vy = viewport
     current_deck.left = -vx
     current_deck.top = 50
     current_deck.draw()
-    for a in get_actors():
+    for a in current_deck.actors:
         a.pos = a.real_x - vx, 186
         a.draw()
     billy.x = billy.real_x - vx
@@ -194,13 +260,14 @@ def draw_deck():
 
 
 def draw_action_caption():
-    for a in get_actors():
+    for a in current_deck.actors:
         if billy.colliderect(a):
             draw_caption('Talk to %s' % a.name)
-            break
-    else:
-        if is_by_lift():
-            draw_caption('Use lift')
+            return
+    for o in current_deck.objects:
+        if o.is_next_to():
+            draw_caption(o.caption())
+            return
 
 
 def draw_caption(caption):
@@ -227,22 +294,19 @@ def move_billy():
         billy.real_x = min(current_deck.level_width - 30, billy.real_x + MAX_WALK)
         billy.image = 'billy-standing-r'
 
-    vx, vy = viewport
-    l_edge = WIDTH // 3
-    r_edge = l_edge * 2
-    if billy.real_x > vx + r_edge:
-        vx = min(billy.real_x - r_edge, current_deck.width - WIDTH)
-    if billy.real_x < vx + l_edge:
-        vx = max(billy.real_x - l_edge, 0)
-    viewport = vx, vy
+    if current_deck.width > WIDTH:
+        vx, vy = viewport
+        l_edge = WIDTH // 3
+        r_edge = l_edge * 2
+        if billy.real_x > vx + r_edge:
+            vx = min(billy.real_x - r_edge, current_deck.width - WIDTH)
+        if billy.real_x < vx + l_edge:
+            vx = max(billy.real_x - l_edge, 0)
+        viewport = vx, vy
 
 
 TWEEN = 'accel_decel'
 
-
-
-def is_by_lift():
-    return 50 < billy.real_x < 120
 
 
 def on_key_down(key):
@@ -313,7 +377,7 @@ class DialogueChoices:
                 color = '#cccccc' if i != self.selected else 'white'
             screen.draw.text(
                 key,
-                bottomleft=(30, 230 + 30 * i),
+                bottomleft=(30, 260 + 30 * i),
                 fontname=FONT,
                 fontsize=20,
                 color=color
@@ -321,7 +385,7 @@ class DialogueChoices:
             if key in self.done:
                 screen.draw.text(
                     '-' * len(key),
-                    bottomleft=(30, 230 + 30 * i),
+                    bottomleft=(30, 260 + 30 * i),
                     fontname=FONT,
                     fontsize=20,
                     color=color
@@ -370,8 +434,8 @@ class DialogueChat:
             )
         screen.draw.text(
             self.text,
-            topleft=(30, 240),
-            width=WIDTH-60,
+            topleft=(30, 250),
+            width=WIDTH - 60,
             fontname=FONT,
             fontsize=18,
             color='#cccccc'
@@ -424,10 +488,13 @@ def on_key_up(key):
         return
 
     if key == keys.UP:
-        for a in get_actors():
+        for a in current_deck.actors:
             if billy.colliderect(a):
                 start_dialogue(a)
-        if is_by_lift():
-            billy.in_lift = True
+                return
+        for o in current_deck.objects:
+            if o.is_next_to():
+                o.use()
+                return
     else:
         billy.image = 'billy-standing'

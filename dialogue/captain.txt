@@ -1,0 +1,52 @@
+[enter]
+THEY:
+   Ah, Billy.
+
+   I'm afraid we have a situation: Mr Baines has been found
+   dead. We think he's been poisoned.
+LEARN: Mr Baines
+LEARN: Poison
+YOU:
+   Poisoned, sir?
+
+   Wait, why did you send for me?
+THEY:
+   Billy, this is a sensitive situation. A death... a poisoning
+   on board? The guests will be terrified.
+
+   I've radioed it in, but we're five days out of New York; I'd
+   like some answers as soon as possible.
+THEY:
+   You're the only person we can spare to look into this. I don't
+   want to take anybody else off duty: everyone else has a role
+   to play in keeping the guests calm.
+
+
+[Mr Baines]
+YOU: Mr. Baines?
+THEY:
+   A Mr. Buster Baines.
+
+   He's apparently a Texan - some hotel magnate.
+
+   This is his cabin, number thirty-five.
+LEARN: Buster Baines
+
+
+[Poison]
+YOU: How do we know he's been poisoned?
+THEY:
+   Well, to put it indelicately, the man is lying dead in a
+   pool of vomit.
+
+   We all eat the same food at dinner, yet nobody else on board is
+   ill, so we can assume Chef's food is not to blame.
+
+   And anyway, I'd want someone to investigate a suspicious
+   death regardless.
+
+
+[Bye]
+THEY: If you find anything, please report to me.
+YOU: Aye-aye, sir.
+EXIT:
