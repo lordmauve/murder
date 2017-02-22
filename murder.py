@@ -71,6 +71,8 @@ FONT = "travelling_typewriter"
 # All NPCs are anchored at center bottom
 CANC = ('center', 'bottom')
 
+bridge = Actor('bridge')
+bridge.name = "Bridge"
 
 deck1 = Actor('deck1')
 deck1.name = "On Deck"
@@ -78,8 +80,9 @@ deck1.name = "On Deck"
 deck2 = Actor('deck2')
 deck2.name = "Lounge"
 
-deck3 = Actor('deck3-start')
-deck3.name = "First-class Cabins"
+deck3_start = Actor('deck3-start')
+deck3 = Actor('deck3-later')
+deck3_start.name = deck3.name = "First-class Cabins"
 
 deck4 = Actor('deck4')
 deck4.name = "Second-class Cabins"
@@ -87,8 +90,17 @@ deck4.name = "Second-class Cabins"
 baines_room = Actor('baines-room')
 baines_room.name = "Cabin 35"
 
+cheshire_room = Actor('cheshire-room')
+cheshire_room.name = "Cabin 37"
+
+luggage_room = Actor('luggage-room')
+luggage_room.name = "Luggage Room"
+
+kitty_room = Actor('kitty-room')
+kitty_room.name = "Cabin 46"
+
 kitty = Actor('kitty-morgan', anchor=CANC)
-kitty.real_x = 500
+kitty.real_x = 200
 kitty.name = "Kitty Morgan"
 
 cheshire = Actor('lord-cheshire', anchor=CANC)
@@ -98,6 +110,18 @@ cheshire.name = "Lord Cheshire"
 manx = Actor('doctor-manx', anchor=CANC)
 manx.real_x = 1200
 manx.name = "Doctor Manx"
+
+mrs_manx = Actor('mrs-manx', anchor=CANC)
+mrs_manx.real_x = 1300
+mrs_manx.name = "Mrs. Manx"
+
+kibble = Actor('donnie-kibble', anchor=CANC)
+kibble.real_x = 1000
+kibble.name = "Donnie Kibble"
+
+pussy = Actor('pussy-galumps', anchor=CANC)
+pussy.real_x = 300
+pussy.name = "Pussy Galumps"
 
 katerina = Actor('katerina-la-gata', anchor=CANC)
 katerina.real_x = 400
@@ -111,7 +135,7 @@ captain = Actor('captain', anchor=CANC)
 captain.real_x = 250
 captain.name = "The Captain"
 
-lift = Actor('lift', pos=(80, 300))
+lift = Actor('lift', pos=(80, 400))
 
 
 # Maximum walk speed
@@ -126,12 +150,17 @@ billy.in_lift = False
 billy.dialogue_with = None
 billy.knows = {'Bye'}  # Start only knowing how to end a conversation
 
-decks = [deck1, deck2, deck3, deck4]
+decks = [bridge, deck1, deck2, deck3, deck4]
+bridge.actors = [captain]
 deck1.actors = [katerina]
-deck2.actors = [cheshire, manx]
-deck3.actors = [calico, captain]
-deck4.actors = [kitty]
+deck2.actors = [cheshire, manx, mrs_manx, kibble, pussy]
+deck3_start.actors = [captain]
+deck3.actors = [calico]
+deck4.actors = []
 baines_room.actors = []
+cheshire_room.actors = []
+kitty_room.actors = [kitty]
+luggage_room.actors = []
 
 
 class Interactable(metaclass=ABCMeta):
@@ -154,11 +183,21 @@ class Interactable(metaclass=ABCMeta):
 
 
 class Door(Interactable):
-    def __init__(self, pos, dest, dest_pos, caption=None):
+    def __init__(
+            self,
+            pos,
+            dest,
+            dest_pos,
+            caption=None,
+            must_know=frozenset()):
         super().__init__(pos)
         self.dest = dest
         self.dest_pos = dest_pos
         self._caption = caption
+        self.must_know = frozenset(must_know)
+
+    def is_next_to(self):
+        return super().is_next_to() and billy.knows.issuperset(self.must_know)
 
     def caption(self):
         return self._caption or "Enter {}".format(self.dest.name)
@@ -212,27 +251,53 @@ class Observation(Interactable):
         return "Examine {}".format(self.name)
 
 
+bridge.objects = [Lift()]
 deck1.objects = [Lift()]
 deck2.objects = [Lift()]
-deck3.objects = [Lift(), Door(310, baines_room, 55)]
-deck4.objects = [Lift()]
+deck3_start.objects = [
+    Lift(),
+    Door(310, baines_room, 55),
+]
+deck3.objects = [
+    Lift(),
+    Door(875, cheshire_room, 405, must_know={"Cheshire's Room"}),
+]
+deck4.objects = [
+    Lift(),
+    Door(500, kitty_room, 405, must_know={"Kitty's Room"}),
+    Door(850, luggage_room, 405, must_know={"Luggage Room Key"}),
+]
 baines_room.objects = [
-    Door(55, deck3, 310, "To the corridor"),
+    Door(55, deck3_start, 310, "To the corridor"),
     Observation(165, 'Two Glasses', 'two-glasses'),
     Observation(300, 'Corpse', 'corpse'),
 ]
+cheshire_room.objects = [
+    Door(405, deck3, 875, "To the corridor"),
+]
+kitty_room.objects = [
+    Door(405, deck4, 500, "To the corridor"),
+]
+luggage_room.objects = [
+    Door(405, deck4, 850, "To the corridor"),
+]
 
 
-all_deck_objects = [deck1, deck2, deck3, deck4, baines_room]
+all_deck_objects = [
+    bridge, deck1, deck2, deck3, deck4, baines_room, cheshire_room, kitty_room,
+    luggage_room, deck3_start
+]
 
-deck_num = 2
-current_deck = deck3
+deck_num = 3
+current_deck = deck3_start
 
 viewport = (0, 0)
 
 for d in all_deck_objects:
     d.level_width = d.width
 deck1.level_width -= 312
+bridge.level_width = 425
+luggage_room.level_width = 225
 
 
 def reload_dialogue():
@@ -268,7 +333,7 @@ def draw():
 def draw_lift():
     lift.draw()
     screen.draw.text(
-        'Deck %s: %s' % (deck_num + 1, current_deck.name),
+        'Deck %s: %s' % (deck_num or "A", current_deck.name),
         midleft=(lift.x + 60, lift.y),
         fontname=FONT,
         fontsize=20,
@@ -364,7 +429,7 @@ def on_key_down_walk(key):
     if billy.in_lift:
         if key == keys.RETURN:
             billy.in_lift = False
-            viewport = 0, 0
+            enter(current_deck)
         elif key == keys.UP and deck_num > 0:
             deck_num -= 1
             current_deck = decks[deck_num]
