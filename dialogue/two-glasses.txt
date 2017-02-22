@@ -1,0 +1,7 @@
+[enter]
+YOU:
+   Hmm... there are two glasses here.
+
+   The bottle is still corked. Perhaps Baines was expecting company?
+LEARN: Two Glasses
+EXIT:

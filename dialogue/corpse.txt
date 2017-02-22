@@ -1,0 +1,6 @@
+[enter]
+YOU:
+   I've... never seen a body before.
+
+   He looks... so inanimate.
+EXIT:

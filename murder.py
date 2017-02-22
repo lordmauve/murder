@@ -9,6 +9,7 @@ import yaml
 import pgzero.loaders
 from pathlib import Path
 from collections import OrderedDict
+from abc import ABCMeta, abstractmethod
 
 basedir = Path(pgzero.loaders.root)
 
@@ -133,17 +134,31 @@ deck4.actors = [kitty]
 baines_room.actors = []
 
 
-class Door:
+class Interactable(metaclass=ABCMeta):
     W = 35
-
-    def __init__(self, pos, dest, dest_pos, caption=None):
+    def __init__(self, pos):
         self.pos = pos
+
+    @abstractmethod
+    def caption(self):
+        pass
+
+    @abstractmethod
+    def use(self):
+        pass
+
+    def is_next_to(self):
+        l = self.pos - self.W
+        r = self.pos + self.W
+        return l < billy.real_x < r
+
+
+class Door(Interactable):
+    def __init__(self, pos, dest, dest_pos, caption=None):
+        super().__init__(pos)
         self.dest = dest
         self.dest_pos = dest_pos
         self._caption = caption
-
-    def is_next_to(self):
-        return self.pos - self.W < billy.real_x < self.pos + self.W
 
     def caption(self):
         return self._caption or "Enter {}".format(self.dest.name)
@@ -165,14 +180,11 @@ def enter(deck, pos=None):
     viewport = vx, viewport[1]
 
 
-class Lift:
+class Lift(Interactable):
     W = 35
 
     def __init__(self, pos=85):
-        self.pos = pos
-
-    def is_next_to(self):
-        return self.pos - self.W < billy.real_x < self.pos + self.W
+        super().__init__(pos)
 
     def caption(self):
         return "Use lift"
@@ -181,11 +193,34 @@ class Lift:
         billy.in_lift = True
 
 
+class Observation(Interactable):
+    def __init__(self, pos, name, dialogue, must_know=frozenset()):
+        super().__init__(pos)
+        self.name = name
+        self._dialogue_file = dialogue
+        self.dialogue = load_dialogue(dialogue)
+        self.must_know = frozenset(must_know)
+
+    def is_next_to(self):
+        return super().is_next_to() and billy.knows.issuperset(self.must_know)
+
+    def use(self):
+        billy.dialogue_with = self
+        DialogueChoices(self.dialogue).start()
+
+    def caption(self):
+        return "Examine {}".format(self.name)
+
+
 deck1.objects = [Lift()]
 deck2.objects = [Lift()]
 deck3.objects = [Lift(), Door(310, baines_room, 55)]
 deck4.objects = [Lift()]
-baines_room.objects = [Door(55, deck3, 310, "To the corridor")]
+baines_room.objects = [
+    Door(55, deck3, 310, "To the corridor"),
+    Observation(165, 'Two Glasses', 'two-glasses'),
+    Observation(300, 'Corpse', 'corpse'),
+]
 
 
 all_deck_objects = [deck1, deck2, deck3, deck4, baines_room]
@@ -212,6 +247,11 @@ def reload_dialogue():
     captain.dialogue = load_dialogue('captain')
     if billy.dialogue_with:
         start_dialogue(billy.dialogue_with)
+    for d in all_deck_objects:
+        for o in d.objects:
+            if isinstance(o, Observation):
+                o.dialogue = load_dialogue(o._dialogue_file)
+
 
 
 reload_dialogue()
