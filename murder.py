@@ -217,6 +217,12 @@ def enter(deck, pos=None):
     else:
         vx = min(current_deck.width - WIDTH, max(billy.real_x - WIDTH // 2, 0))
     viewport = vx, viewport[1]
+    try:
+        music_name = deck.music
+    except AttributeError:
+        music.stop()
+    else:
+        music.play(music_name)
 
 
 class Lift(Interactable):
@@ -306,10 +312,15 @@ def reload_dialogue():
     Press F5 to reload all when changed.
 
     """
-    cheshire.dialogue = load_dialogue('cheshire')
-    katerina.dialogue = load_dialogue('katerina')
     calico.dialogue = load_dialogue('calico')
     captain.dialogue = load_dialogue('captain')
+    cheshire.dialogue = load_dialogue('cheshire')
+    donnie.dialogue = load_dialogue('donnie')
+    katerina.dialogue = load_dialogue('katerina')
+    kitty.dialogue = load_dialogue('kitty')
+    manx.dialogue = load_dialogue('manx')
+    mrs_manx.dialogue = load_dialogue('mrs-manx')
+    pussy.dialogue = load_dialogue('pussy')
     if billy.dialogue_with:
         start_dialogue(billy.dialogue_with)
     for d in all_deck_objects:
