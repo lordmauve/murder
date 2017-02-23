@@ -1,13 +1,38 @@
 [enter]
 THEY: Ah, my good man, are you serving drinks?
+YOU: I'm afraid not. There has been a murder.
+THEY: Oh, how ghastly.
+YOU: May I ask you a few questions?
 
-[Kitty Morgan]
+
+[Kitty Morgan]?
 YOU: Do you know Kitty Morgan?
 THEY:
    Ah, yes. The name rings a bell. I can't recall where from.
    Perhaps it will come to me later.
 
    Anything else?
+
+
+[Buster Baines]?
+YOU: Did you know Buster Baines?
+THEY: Oh, gosh. Not well. We've been across a card table from one another.
+LEARN: Cards
+LEARN: .KnowsBB
+
+
+[Last Seen] if .KnowsBB
+YOU: When was the last time you saw Mr. Baines?
+THEY: I saw him here at... say, around six-fifteen.
+
+   He ordered a martini -- I remember that because it looked pretty darned
+   delicious. So I ordered one too!
+
+
+[Cards]?
+YOU: You play cards?
+THEY: I'm a sucker for a game of poker, I'm afraid.
+
 
 [Bye]
 THEY: Very well. Perhaps you could rustle up a gin and tonic? Thanks.

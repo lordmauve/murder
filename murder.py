@@ -302,7 +302,16 @@ class Interactable(metaclass=ABCMeta):
         return l < billy.real_x < r
 
 
-class Door(Interactable):
+class InteractableIf(Interactable):
+    def __init__(self, pos, must_know=frozenset()):
+        self.pos = pos
+        self.must_know = frozenset(must_know)
+
+    def is_next_to(self):
+        return super().is_next_to() and things_known.issuperset(self.must_know)
+
+
+class Door(InteractableIf):
     def __init__(
             self,
             pos,
@@ -310,14 +319,10 @@ class Door(Interactable):
             dest_pos,
             caption=None,
             must_know=frozenset()):
-        super().__init__(pos)
+        super().__init__(pos, must_know)
         self.dest = dest
         self.dest_pos = dest_pos
         self._caption = caption
-        self.must_know = frozenset(must_know)
-
-    def is_next_to(self):
-        return super().is_next_to() and things_known.issuperset(self.must_know)
 
     def caption(self):
         return self._caption or "Enter {}".format(self.dest.name)
@@ -346,11 +351,11 @@ def enter(deck, pos=None):
         music.set_volume(0.6)
 
 
-class Lift(Interactable):
+class Lift(InteractableIf):
     W = 35
 
-    def __init__(self, pos=85):
-        super().__init__(pos)
+    def __init__(self, pos=85, must_know=frozenset()):
+        super().__init__(pos, must_know)
 
     def caption(self):
         return "Use lift"
@@ -361,16 +366,12 @@ class Lift(Interactable):
         music.set_volume(0.3)
 
 
-class Observation(Interactable):
+class Observation(InteractableIf):
     def __init__(self, pos, name, dialogue, must_know=frozenset()):
-        super().__init__(pos)
+        super().__init__(pos, must_know)
         self.name = name
         self._dialogue_file = dialogue
         self.dialogue = load_dialogue(dialogue)
-        self.must_know = frozenset(must_know)
-
-    def is_next_to(self):
-        return super().is_next_to() and things_known.issuperset(self.must_know)
 
     def use(self):
         billy.dialogue_with = self
@@ -384,8 +385,8 @@ bridge.objects = [Lift()]
 deck1.objects = [Lift()]
 deck2.objects = [Lift()]
 deck3_start.objects = [
-    Lift(),
-    Door(310, baines_room, 55),
+    Lift(must_know={'Two Glasses'}),
+    Door(310, baines_room, 55, must_know={'Buster Baines'}),
 ]
 deck3.objects = [
     Lift(),
