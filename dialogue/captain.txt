@@ -30,9 +30,10 @@ YOU: Mr. Baines?
 THEY:
    A Mr. Buster Baines.
 
-   He's apparently a Texan - some hotel magnate.
-
    This is his cabin, number thirty-five.
+
+   I know it's gruesome, but I'd like you to take a look in case there's
+   anything we missed.
 LEARN: Buster Baines
 
 
@@ -51,5 +52,7 @@ THEY:
 
 [Bye] if Buster Baines
 THEY: If you find anything, please report to me.
+
+   I'll be on the bridge.
 YOU: Aye-aye, sir.
 EXIT:

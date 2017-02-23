@@ -754,3 +754,12 @@ def on_key_up(key):
                 return
     else:
         billy.image = 'billy-standing'
+
+
+
+def show_menu():
+    billy.dialogue_with = show_menu
+    DialogueChoices(load_dialogue('menus')).show()
+
+show_menu.name = 'Saved Game'
+

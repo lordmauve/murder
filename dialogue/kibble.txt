@@ -1,0 +1,29 @@
+[enter]
+YOU: Hey, Donnie.
+THEY: Whatch-you want?
+YOU: There's been a murder.
+THEY: I bloody know there's been a murder. All the crew knows.
+THEY: You been going around blabbing to guests about it?
+LEARN: .knows
+
+
+[enter] if .knows
+THEY: Back again are ya?
+
+
+[Buster Baines]
+YOU: Did you know Buster Baines?
+THEY: I know all the guests, yeah.
+
+      'E was a Yank. Always wearing a stupid hat -- from Texas or something.
+LEARN: .knowsBB
+
+
+[Last Seen]
+YOU: When did you last see Baines?
+THEY: Earlier, I guess, at the bar.
+
+
+[Bye]
+YOU: Thanks.
+THEY: Yeah, well, do me a favour and leave me outta this, alright?

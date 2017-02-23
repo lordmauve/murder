@@ -1,6 +1,6 @@
 [enter]
 THEY: Ah, my good man, are you serving drinks?
-YOU: I'm afraid not. There has been a murder.
+YOU: I'm afraid not. There has been a murder. A Mr. Baines.
 THEY: Oh, how ghastly.
 YOU: May I ask you a few questions?
 
@@ -14,11 +14,20 @@ THEY:
    Anything else?
 
 
-[Buster Baines]?
+[Buster Baines]
 YOU: Did you know Buster Baines?
 THEY: Oh, gosh. Not well. We've been across a card table from one another.
 LEARN: Cards
 LEARN: .KnowsBB
+
+
+[About Buster Baines] if .KnowsBB
+YOU: Can you tell me about Mr. Baines?
+THEY: I don't know... perhaps a little.
+
+   He's a Texan. Hotelier, I believe.
+LEARN: Texan
+LEARN: Hotel
 
 
 [Last Seen] if .KnowsBB

@@ -1,0 +1,34 @@
+[enter]
+YOU: Good evening, sir.
+THEY: Good evening, good evening.
+
+
+[Death]
+YOU: I'm afraid there's been a death on board.
+THEY: How frightful. A guest?
+YOU: Yes, sir. A Mr. Buster Baines.
+THEY: Oh, the Texan fellow.
+LEARN: Texan
+LEARN: .knowsBB
+
+
+[Buster Baines] if .knowsBB
+YOU: Were you well acquainted with Mr. Baines?
+THEY: I have bumped into him during the dinners, yes. I can't say I know him...
+      knew him... well.
+
+
+[Last Seen] if .knowsBB
+YOU: When did you last see Mr Baines?
+THEY: Last night? Or perhaps the night before.
+LEARN: Manx didn't see Baines
+
+
+[Last Seen] if Mrs Manx saw Baines, Manx didn't see Baines
+YOU: Sir, your wife says she saw him here.
+THEY: I'm sorry, then; perhaps I was not paying attention.
+
+
+[Bye]
+YOU: Thank you for your time.
+THEY: That's quite all right.

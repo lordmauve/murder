@@ -1,0 +1,32 @@
+[enter]
+YOU: Good evening, madam.
+THEY: Oh! How do you do?
+YOU: Madam... I'm afraid one of the guests has died.
+
+     I'm investigating how.
+THEY: Oh my goodness! Who?
+YOU: A Mr. Buster Baines.
+THEY: That name doesn't ring a bell.
+
+
+[Texan]?
+YOU: He was a Texan gentleman.
+THEY: Now I have seen a man in a Texan hat around. Perhaps that's him.
+LEARN: .knows
+
+
+[enter] if .knows
+YOU: Hello again, madam.
+
+
+[Last Seen] if .knows
+YOU: When did you last see Mr. Baines?
+THEY: If it's the gentleman in the hat - it was earlier tonight.
+
+   He was writing something on a napkin.
+LEARN: Napkin
+LEARN: Mrs Manx saw Baines
+
+
+[Bye]
+YOU: Thank you for speaking to me.
