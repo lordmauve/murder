@@ -1,5 +1,4 @@
 [enter]
-LEARN: Night Air
 YOU: Good evening, madam.
 THEY: Buena noches.
 
@@ -11,7 +10,7 @@ THEY:
    Señor Baines... it is all too sad.
 LEARN: Buster Baines
 
-[Buster Baines]
+[Buster Baines]?
 YOU: It is sad.
 
 [Bye]

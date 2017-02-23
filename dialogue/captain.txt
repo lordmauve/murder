@@ -4,8 +4,6 @@ THEY:
 
    I'm afraid we have a situation: Mr Baines has been found
    dead. We think he's been poisoned.
-LEARN: Mr Baines
-LEARN: Poison
 YOU:
    Poisoned, sir?
 
@@ -20,6 +18,11 @@ THEY:
    You're the only person we can spare to look into this. I don't
    want to take anybody else off duty: everyone else has a role
    to play in keeping the guests calm.
+LEARN: .death
+
+
+[enter] if .death
+THEY: How's the investigation going?
 
 
 [Mr Baines]
@@ -46,7 +49,7 @@ THEY:
    death regardless.
 
 
-[Bye]
+[Bye] if Buster Baines
 THEY: If you find anything, please report to me.
 YOU: Aye-aye, sir.
 EXIT:

@@ -36,7 +36,7 @@ class DialogueMatch:
             if things_known.issuperset(cond):
                 is_done = cond in done
                 return steps, is_done
-        return None
+        return None, None
 
     def set_done(self, done):
         for cond, steps in reversed(self.conds):
@@ -51,8 +51,9 @@ class DialogueMatch:
         )
 
 
-# These choices can never be marked as done
-NEVER_DONE = {'Bye'}
+# Choices that correspond to goodbyes
+GOODBYES = {'Bye'}
+
 
 class DialogueMenu:
     """Represent a menu of dialogue."""
@@ -74,6 +75,9 @@ class DialogueMenu:
                 m = m.choices[path] = DialogueMenu(self.path + '.' + path)
             m.add_condition(key, cond, steps)
         else:
+            if key in GOODBYES:
+                if steps[-1][0] != 'EXIT':
+                    steps.append(('EXIT', ''))
             try:
                 match = self.choices[key]
             except KeyError:
@@ -81,7 +85,10 @@ class DialogueMenu:
             match.add_condition(cond, steps)
 
     def get_enter(self):
-        return self.choices['enter'].get_steps(set())[0]
+        enter = self.choices.get('enter')
+        if enter:
+            return enter.get_steps(set())[0]
+        return None
 
     def get_choices(self):
         """Get a list of (choice, done) dialogue choices."""
@@ -99,13 +106,25 @@ class DialogueMenu:
     def get_steps(self, choice):
         dm = self.choices[choice]
         steps, done = dm.get_steps(self.done)
-        if not done and choice not in NEVER_DONE:
+        if not done and choice not in GOODBYES:
             dm.set_done(self.done[choice])
         return steps
 
+    def validate(self):
+        for m in self.choices.values():
+            for cond, steps in m.conds:
+                for action, value in steps:
+                    if action == 'EXIT':
+                        return
+        raise ValueError("No EXIT action in %r" % self)
+
+    def __bool__(self):
+        return bool(self.choices)
+
     def __repr__(self):
-        return '{}({!r})'.format(
+        return '{}({!r}) = {!r}'.format(
             type(self).__name__,
+            self.path,
             dict(self.choices)
         )
 
@@ -115,25 +134,27 @@ def load_dialogue(fname):
     path = basedir / 'dialogue' / '{}.txt'.format(fname)
     patterns = DialogueMenu(fname)
     key = None
-    cond = frozenset()
+    cond = None
     steps = []
     with path.open(encoding='utf8') as f:
         for lineno, l in enumerate(f, start=1):
             l = l.strip()
-            mo = re.match(r'^\[(.*)\](?: +if +(.*))?$', l)
+            mo = re.match(r'^\[(.*)\](\??)(?: +if +(.*))?$', l)
             if mo:
                 if key:
                     patterns.add_choice(key, cond, steps)
                     steps = []
-                    cond = frozenset()
-                key = mo.group(1)
-                if mo.group(2):
-                    cond = set()
-                    for t in mo.group(2).split(','):
+                    cond = None
+                key, qmark, ifs = mo.groups()
+                cond = set()
+                if qmark:
+                    cond.add(key)
+                if ifs:
+                    for t in ifs.split(','):
                         if t.startswith('.'):
                             t = fname + t
                         cond.add(t)
-                    cond = frozenset(cond)
+                cond = frozenset(cond)
                 continue
             mo = re.match('^([A-Z]+): *(.*)', l)
             if mo:
@@ -156,7 +177,10 @@ def load_dialogue(fname):
     if key:
         patterns.add_choice(key, cond, steps)
 
-    return patterns
+    if patterns:
+        patterns.validate()
+
+    return patterns or None
 
 TITLE = "A Death at Sea"
 WIDTH = 800

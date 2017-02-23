@@ -1,0 +1,21 @@
+[enter]
+YOU: Ms. Galumps?
+THEY: Hello, sugar.
+YOU: I'd like to ask you a few questions about the death on board.
+THEY: Death?
+YOU: I'm afraid one of the guests has died, a Mr. Buster Baines.
+THEY: I'm sorry to hear that.
+LEARN: .death
+
+[enter] if .death
+THEY: Hello again, sugar.
+
+
+[Buster Baines]
+YOU: Did you know Buster Baines?
+THEY: I can't say I did.
+
+
+[Bye]
+YOU: Thank you, Ms. Galumps.
+THEY: Any time.
