@@ -8,36 +8,144 @@ import re
 import yaml
 import pgzero.loaders
 from pathlib import Path
-from collections import OrderedDict
+from collections import OrderedDict, defaultdict
 from abc import ABCMeta, abstractmethod
 
 basedir = Path(pgzero.loaders.root)
 
 
-def load_dialogue(character):
-    """Load the dialogue for the given character."""
-    path = basedir / 'dialogue' / '{}.txt'.format(character)
-    patterns = OrderedDict()
+# This is all the save game state
+things_known = set()
+all_done = {}
+
+
+class DialogueMatch:
+    """Represent the steps that happen when a dialogue choice is chosen."""
+    def __init__(self, conds=None):
+        self.conds = conds or []
+
+    def add_condition(self, cond, steps):
+        newsteps = []
+        for action, text in steps:
+            text = re.sub(r'(?<!\n)\n(?!\n)', ' ', text.strip())
+            newsteps.append((action, text))
+        self.conds.append((frozenset(cond), newsteps))
+
+    def get_steps(self, done):
+        for cond, steps in reversed(self.conds):
+            if things_known.issuperset(cond):
+                is_done = cond in done
+                return steps, is_done
+        return None
+
+    def set_done(self, done):
+        for cond, steps in reversed(self.conds):
+            if things_known.issuperset(cond):
+                done.add(cond)
+                return
+
+    def __repr__(self):
+        return '{}({!r})'.format(
+            type(self).__name__,
+            self.conds
+        )
+
+
+# These choices can never be marked as done
+NEVER_DONE = {'Bye'}
+
+class DialogueMenu:
+    """Represent a menu of dialogue."""
+
+    def __init__(self, path):
+        self.choices = OrderedDict()
+        self.path = path
+
+    @property
+    def done(self):
+        return all_done.setdefault(self.path, defaultdict(set))
+
+    def add_choice(self, key, cond, steps):
+        if '.' in key:
+            m = self
+            parts = key.split('.')
+            key = parts.pop()
+            for path in parts:
+                m = m.choices[path] = DialogueMenu(self.path + '.' + path)
+            m.add_condition(key, cond, steps)
+        else:
+            try:
+                match = self.choices[key]
+            except KeyError:
+                match = self.choices[key] = DialogueMatch()
+            match.add_condition(cond, steps)
+
+    def get_enter(self):
+        return self.choices['enter'].get_steps(set())[0]
+
+    def get_choices(self):
+        """Get a list of (choice, done) dialogue choices."""
+        opts = []
+        for k, v in self.choices.items():
+            if k == 'enter':
+                continue
+            if not isinstance(v, DialogueMatch):
+                continue
+            steps, done = v.get_steps(self.done[k])
+            if steps is not None:
+                opts.append((k, done))
+        return opts
+
+    def get_steps(self, choice):
+        dm = self.choices[choice]
+        steps, done = dm.get_steps(self.done)
+        if not done and choice not in NEVER_DONE:
+            dm.set_done(self.done[choice])
+        return steps
+
+    def __repr__(self):
+        return '{}({!r})'.format(
+            type(self).__name__,
+            dict(self.choices)
+        )
+
+
+def load_dialogue(fname):
+    """Load the dialogue from the given file."""
+    path = basedir / 'dialogue' / '{}.txt'.format(fname)
+    patterns = DialogueMenu(fname)
     key = None
+    cond = frozenset()
     steps = []
     with path.open(encoding='utf8') as f:
         for lineno, l in enumerate(f, start=1):
             l = l.strip()
-            mo = re.match(r'^\[(.*)\]$', l)
+            mo = re.match(r'^\[(.*)\](?: +if +(.*))?$', l)
             if mo:
                 if key:
-                    patterns[key] = steps
+                    patterns.add_choice(key, cond, steps)
                     steps = []
+                    cond = frozenset()
                 key = mo.group(1)
+                if mo.group(2):
+                    cond = set()
+                    for t in mo.group(2).split(','):
+                        if t.startswith('.'):
+                            t = fname + t
+                        cond.add(t)
+                    cond = frozenset(cond)
                 continue
             mo = re.match('^([A-Z]+): *(.*)', l)
             if mo:
-                action = mo.group(1)
+                action, value = mo.groups()
                 if action not in ('YOU', 'THEY', 'EXIT', 'LEARN'):
                     raise ValueError(
                         'invalid key %r, %s, line %d' % (action, path, lineno)
                     )
-                steps.append(mo.groups())
+                value = value.strip()
+                if action == 'LEARN' and value.startswith('.'):
+                    value = fname + value
+                steps.append((action, value))
             else:
                 action, text = steps[-1]
                 if text:
@@ -46,22 +154,9 @@ def load_dialogue(character):
                 steps[-1] = action, text
 
     if key:
-        patterns[key] = steps
+        patterns.add_choice(key, cond, steps)
 
-    out_patterns = OrderedDict()
-    for k, v in patterns.items():
-        pats = out_patterns
-        parts = k.split('.')
-        for path in parts[:-1]:
-            pats = pats.setdefault(path, OrderedDict())
-        steps = []
-        for action, text in v:
-            text = re.sub(r'(?<!\n)\n(?!\n)', ' ', text.strip())
-            steps.append((action, text))
-        pats[parts[-1]] = steps
-
-    return out_patterns
-
+    return patterns
 
 TITLE = "A Death at Sea"
 WIDTH = 800
@@ -150,7 +245,6 @@ billy = Actor(
 billy.real_x = 100
 billy.in_lift = False
 billy.dialogue_with = None
-billy.knows = {'Bye'}  # Start only knowing how to end a conversation
 
 decks = [bridge, deck1, deck2, deck3, deck4]
 bridge.actors = [captain]
@@ -199,7 +293,7 @@ class Door(Interactable):
         self.must_know = frozenset(must_know)
 
     def is_next_to(self):
-        return super().is_next_to() and billy.knows.issuperset(self.must_know)
+        return super().is_next_to() and things_known.issuperset(self.must_know)
 
     def caption(self):
         return self._caption or "Enter {}".format(self.dest.name)
@@ -252,7 +346,7 @@ class Observation(Interactable):
         self.must_know = frozenset(must_know)
 
     def is_next_to(self):
-        return super().is_next_to() and billy.knows.issuperset(self.must_know)
+        return super().is_next_to() and things_known.issuperset(self.must_know)
 
     def use(self):
         billy.dialogue_with = self
@@ -464,6 +558,7 @@ def on_key_down_walk(key):
 def ding():
     sounds.ding.play()
 
+
 def on_key_down_dialogue(key):
     if key == keys.UP:
         billy.dialogue_menu.up()
@@ -476,28 +571,37 @@ def on_key_down_dialogue(key):
 class DialogueChoices:
     def __init__(self, options, parent=None):
         self.options = options
-        self.done = options.setdefault('__done', set())
         self.parent = parent
 
     def start(self):
-        if self.parent is None and 'enter' in self.options:
-            self.play_dialogue(self.options['enter'])
-        else:
-            self.show()
+        if self.parent is None:
+            enter_steps = self.options.get_enter()
+            if enter_steps:
+                self.play_dialogue(enter_steps)
+                return
+        self.show()
 
     def show(self):
-        self.selected = 0
-        self.choices = [
-            (k, v)
-            for k, v in self.options.items()
-            if k in billy.knows
-        ]
+        self.choices = self.options.get_choices()
+        if not self.choices:
+            if self.parent:
+                billy.dialogue_menu = self.parent
+                return
+            else:
+                billy.dialogue_with = None
+                billy.dialogue_menu = None
         billy.dialogue_menu = self
+
+        for selected, (key, done) in enumerate(self.choices):
+            if not done:
+                self.selected = selected
+                return
+        self.selected = 0
 
     def draw(self):
         for i, opt in enumerate(self.choices):
-            key, steps = opt
-            if key in self.done:
+            key, is_done = opt
+            if is_done:
                 color = '#ff4444' if i == self.selected else '#cc0000'
             else:
                 color = '#cccccc' if i != self.selected else 'white'
@@ -508,7 +612,7 @@ class DialogueChoices:
                 fontsize=20,
                 color=color
             )
-            if key in self.done:
+            if is_done:
                 screen.draw.text(
                     '-' * len(key),
                     bottomleft=(30, 260 + 30 * i),
@@ -524,9 +628,8 @@ class DialogueChoices:
         self.selected = (self.selected + 1) % len(self.choices)
 
     def select(self):
-        key, steps = self.choices[self.selected]
-        if key not in ('Bye', 'Back'):
-            self.done.add(key)
+        key, done = self.choices[self.selected]
+        steps = self.options.get_steps(key)
         self.play_dialogue(steps)
 
     def play_dialogue(self, steps):
@@ -583,7 +686,7 @@ class DialogueChat:
                 self.parent.show()
                 return
             if self.action == 'LEARN':
-                billy.knows.add(self.text)
+                things_known.add(self.text)
                 continue
             break
 
@@ -600,10 +703,12 @@ class DialogueChat:
 
 def start_dialogue(character):
     """Start a dialogue with a character."""
-    billy.knows.add(character.name)  # Learn about this character
+    things_known.add(character.name)  # Learn about this character
     try:
         dialogue = character.dialogue
     except AttributeError:
+        return
+    if not dialogue:
         return
     billy.dialogue_with = character
     DialogueChoices(dialogue).start()
