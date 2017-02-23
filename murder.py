@@ -225,6 +225,7 @@ def enter(deck, pos=None):
         music.stop()
     else:
         music.play(music_name)
+        music.set_volume(0.6)
 
 
 class Lift(Interactable):
@@ -238,6 +239,8 @@ class Lift(Interactable):
 
     def use(self):
         billy.in_lift = True
+        music.play('elevator')
+        music.set_volume(0.3)
 
 
 class Observation(Interactable):
@@ -447,14 +450,19 @@ def on_key_down_walk(key):
             deck_num -= 1
             current_deck = decks[deck_num]
             animate(lift, y=100 * deck_num + 100, tween=TWEEN)
+            clock.schedule_unique(ding, 0.8)
         elif key == keys.DOWN and deck_num < len(decks) - 1:
             deck_num += 1
             current_deck = decks[deck_num]
             animate(lift, y=100 * deck_num + 100, tween=TWEEN)
+            clock.schedule_unique(ding, 0.8)
     else:
         if key == keys.UP:
             billy.image = 'billy-back'
 
+
+def ding():
+    sounds.ding.play()
 
 def on_key_down_dialogue(key):
     if key == keys.UP:
@@ -602,7 +610,7 @@ def start_dialogue(character):
 
 
 def on_key_up(key):
-    if billy.dialogue_with:
+    if billy.dialogue_with or billy.in_lift:
         return
 
     if key == keys.UP:
