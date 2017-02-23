@@ -76,6 +76,7 @@ bridge.name = "Bridge"
 
 deck1 = Actor('deck1')
 deck1.name = "On Deck"
+deck1.music = "deck1"
 
 deck2 = Actor('deck2')
 deck2.name = "Lounge"
@@ -315,7 +316,7 @@ def reload_dialogue():
     calico.dialogue = load_dialogue('calico')
     captain.dialogue = load_dialogue('captain')
     cheshire.dialogue = load_dialogue('cheshire')
-    donnie.dialogue = load_dialogue('donnie')
+    kibble.dialogue = load_dialogue('kibble')
     katerina.dialogue = load_dialogue('katerina')
     kitty.dialogue = load_dialogue('kitty')
     manx.dialogue = load_dialogue('manx')
