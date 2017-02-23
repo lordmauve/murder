@@ -80,6 +80,7 @@ deck1.music = "deck1"
 
 deck2 = Actor('deck2')
 deck2.name = "Lounge"
+deck2.music = "deck2"
 
 deck3_start = Actor('deck3-start')
 deck3 = Actor('deck3-later')
