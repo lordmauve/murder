@@ -5,8 +5,10 @@ A murder adventure game.
 
 """
 import re
-import yaml
+import sys
+import pickle
 import pgzero.loaders
+import datetime
 from pathlib import Path
 from collections import OrderedDict, defaultdict
 from abc import ABCMeta, abstractmethod
@@ -578,6 +580,8 @@ def on_key_down_walk(key):
     else:
         if key == keys.UP:
             billy.image = 'billy-back'
+        elif key == keys.ESCAPE:
+            show_menu()
 
 
 def ding():
@@ -591,6 +595,10 @@ def on_key_down_dialogue(key):
         billy.dialogue_menu.down()
     elif key == keys.RETURN:
         billy.dialogue_menu.select()
+    elif key == keys.ESCAPE:
+        back = getattr(billy.dialogue_menu, 'back')
+        if back:
+            back()
 
 
 class DialogueChoices:
@@ -758,8 +766,150 @@ def on_key_up(key):
 
 
 def show_menu():
-    billy.dialogue_with = show_menu
-    DialogueChoices(load_dialogue('menus')).show()
+    PauseMenu().show()
 
-show_menu.name = 'Saved Game'
 
+class GameMenu:
+    def __init__(self):
+        self.selected = 0
+
+    def show(self):
+        billy.dialogue_with = billy.dialogue_menu = self
+
+    def draw(self):
+        for i, opt in enumerate(self.choices):
+            color = '#cccccc' if i != self.selected else 'white'
+            screen.draw.text(
+                opt,
+                midtop=(WIDTH // 2, 260 + 30 * i),
+                fontname=FONT,
+                fontsize=20,
+                color=color
+            )
+
+    def up(self):
+        self.selected = (self.selected - 1) % len(self.choices)
+
+    def down(self):
+        self.selected = (self.selected + 1) % len(self.choices)
+
+    def select(self):
+        choice = self.choices[self.selected]
+        self.do(choice)
+
+    def close(self):
+        billy.dialogue_with = billy.dialogue_menu = None
+
+
+class PauseMenu(GameMenu):
+    def __init__(self):
+        super().__init__()
+        self.choices = [
+            'Load Game',
+            'Save Game',
+            'Exit'
+        ]
+        if not any(savesdir.glob('*.save')):
+            del self.choices[:1]
+
+    def do(self, choice):
+        if choice == 'Load Game':
+            LoadMenu().show()
+        elif choice == 'Save Game':
+            SaveMenu().show()
+        else:
+            SaveMenu.autosave()
+            sys.exit(0)
+
+    def back(self):
+        self.close()
+
+
+savesdir = basedir / 'saves'
+AUTOSAVE_INTERVAL = 300  # seconds
+
+class LoadMenu(GameMenu):
+    def __init__(self):
+        super().__init__()
+        self.choices = []
+        for p in sorted(savesdir.glob('*.save')):
+            mtime = p.stat().st_mtime
+            dt = datetime.datetime.fromtimestamp(mtime)
+            name = '{}: saved {:%Y-%m-%d %H:%M}'.format(p.stem, dt)
+            self.choices.append(name)
+
+    def back(self):
+        PauseMenu().show()
+
+    def do(self, choice):
+        if ':' in choice:
+            choice = choice.split(':', 1)[0]
+        self.load(choice)
+        self.close()
+
+    @staticmethod
+    def load(name):
+        global things_known, all_done, deck_num
+        savefile = savesdir / '{}.save'.format(name)
+        with savefile.open('rb') as f:
+            data = pickle.load(f)
+        deck = next(
+            (d for d in all_deck_objects
+             if d.image == data['current_deck.image']),
+            None
+        )
+        if deck:
+            enter(deck, pos=data['billy.real_x'])
+        things_known = data['things_known']
+        all_done = data['all_done']
+        deck_num = data['deck_num']
+        lift.y = data['lift.y']
+        clock.schedule_unique(SaveMenu.autosave, AUTOSAVE_INTERVAL)
+
+
+class SaveMenu(GameMenu):
+    def __init__(self):
+        super().__init__()
+        self.choices = []
+        for n in range(1, 6):
+            name = 'Slot %d' % n
+            obj = savesdir / '{}.save'.format(name)
+            if obj.exists():
+                mtime = obj.stat().st_mtime
+                dt = datetime.datetime.fromtimestamp(mtime)
+                name = '{}: saved {:%Y-%m-%d %H:%M}'.format(name, dt)
+            self.choices.append(name)
+
+    def do(self, choice):
+        if ':' in choice:
+            choice = choice.split(':', 1)[0]
+        self.save(choice)
+        self.close()
+
+    @staticmethod
+    def autosave():
+        print("Auto-saving...")
+        SaveMenu.save('Auto-save')
+        clock.schedule_unique(SaveMenu.autosave, AUTOSAVE_INTERVAL)
+
+    @staticmethod
+    def save(name):
+        data = {
+            'things_known': things_known,
+            'all_done': all_done,
+            'billy.real_x': billy.real_x,
+            'lift.y': lift.y,
+            'current_deck.image': current_deck.image,
+            'deck_num': deck_num,
+        }
+        if not savesdir.exists():
+            savesdir.mkdir()
+        savefile = savesdir / '{}.save'.format(name)
+        with savefile.open('wb') as f:
+            pickle.dump(data, f, -1)
+
+    def back(self):
+        PauseMenu().show()
+
+
+clock.schedule_unique(SaveMenu.autosave, AUTOSAVE_INTERVAL)
