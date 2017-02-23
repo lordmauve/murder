@@ -153,6 +153,7 @@ def load_dialogue(fname):
                     cond.add(key)
                 if ifs:
                     for t in ifs.split(','):
+                        t = t.strip()
                         if t.startswith('.'):
                             t = fname + t
                         cond.add(t)
@@ -807,7 +808,7 @@ class PauseMenu(GameMenu):
         self.choices = [
             'Load Game',
             'Save Game',
-            'Exit'
+            'Auto-save & Exit'
         ]
         if not any(savesdir.glob('*.save')):
             del self.choices[:1]
@@ -913,3 +914,7 @@ class SaveMenu(GameMenu):
 
 
 clock.schedule_unique(SaveMenu.autosave, AUTOSAVE_INTERVAL)
+try:
+    LoadMenu.load('Auto-save')
+except IOError:
+    pass

@@ -3,6 +3,11 @@ THEY: Ah, my good man, are you serving drinks?
 YOU: I'm afraid not. There has been a murder. A Mr. Baines.
 THEY: Oh, how ghastly.
 YOU: May I ask you a few questions?
+LEARN: .knows
+
+
+[enter] if .knows
+THEY: Ah, hello. Do you have my gin and tonic?
 
 
 [Kitty Morgan]?

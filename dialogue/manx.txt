@@ -25,7 +25,7 @@ LEARN: Manx didn't see Baines
 
 
 [Last Seen] if Mrs Manx saw Baines, Manx didn't see Baines
-YOU: Sir, your wife says she saw him here.
+YOU: Sir, your wife says she saw Baines here.
 THEY: I'm sorry, then; perhaps I was not paying attention.
 
 
