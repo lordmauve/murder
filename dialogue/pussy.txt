@@ -16,6 +16,50 @@ YOU: Did you know Buster Baines?
 THEY: I can't say I did.
 
 
+
+[Lord Cheshire]
+YOU: Do you know Lord Cheshire?
+THEY: I'm fed up of you people sticking your noses into my private life.
+
+
+[Lord Cheshire] if Cheshire/Katerina
+YOU: Did you know Lord Cheshire has been romantically linked to Katerina la
+     Gata?
+THEY: That's... none of my business.
+
+
+[Lord Cheshire] if Pussy jilted
+YOU: You and Lord Cheshire were an item, weren't you?
+THEY: I...
+YOU: And he finished it with you on board this ship, didn't he?
+THEY: ...That man is a loser!
+
+      We were making plans for dinner in New York, for drinks, parties...
+
+      And now he's all over *her*!
+
+
+[Cheshire's business] if Pussy/Cheshire
+YOU: Do you know why Lord Cheshire is going to New York?
+THEY: He told me he had some sort of business deal with a Japanese, worth a
+      whole bucket of money!
+LEARN: .business
+
+
+[Katerina la Gata]
+YOU: Do you know Katerina la Gata?
+THEY: Apparently, she's "angelic". No. I do not know her and I don't want to.
+
+
+[Katerina la Gata] if Pussy jilted
+YOU: You bear a grudge against Ms. la Gata?
+THEY: You bet I do!
+
+      But it's *him* I resent. There, I said it!
+LEARN: .resent
+
+
+
 [Bye]
 YOU: Thank you, Ms. Galumps.
 THEY: Any time.

@@ -50,9 +50,31 @@ THEY:
    death regardless.
 
 
+[KM] if Note
+YOU: I found a note that may be from Buster Baines.
+
+   Do you know who "KM" might be?
+THEY: Hmm... let me consult the manifest.
+
+   There are two passengers on board with those initials... Dr. Karl Manx,
+   and Ms. Kitty Morgan.
+THEY: Dr. Manx's cabin is number 36.
+
+   Ms. Morgan's is... number 46.
+THEY: Oh, if you're going down to deck 4, you might want to take a look at
+      Baines' luggage.
+
+      Here's the key.
+LEARN: Kitty Morgan
+LEARN: Luggage
+
+
 [Bye] if Buster Baines
 THEY: If you find anything, please report to me.
 
    I'll be on the bridge.
 YOU: Aye-aye, sir.
 EXIT:
+
+[Bye] if Lift
+YOU: Thank you, captain.

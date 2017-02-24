@@ -1217,10 +1217,10 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="730.25459"
-     inkscape:cy="155.04424"
+     inkscape:cx="1213.6844"
+     inkscape:cy="839.54856"
      inkscape:document-units="px"
-     inkscape:current-layer="layer4"
+     inkscape:current-layer="layer1"
      showgrid="false"
      inkscape:window-width="1855"
      inkscape:window-height="1176"
@@ -1244,8 +1244,7 @@
   <g
      inkscape:label="Background"
      inkscape:groupmode="layer"
-     id="layer1"
-     sodipodi:insensitive="true">
+     id="layer1">
     <rect
        y="352.3436"
        x="0.056506447"
@@ -7705,6 +7704,54 @@
          id="tspan22282"
          x="674.49573"
          y="-1449.3254">JRC</tspan></text>
+    <g
+       id="g22303"
+       transform="matrix(0.871879,-0.48972136,0.48972136,0.871879,72.259921,630.10583)">
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path22284"
+         d="m 1229.8512,205.63737 4.0365,-0.0355"
+         style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#808080;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#876e5d;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 1232.8562,205.63737 3.0265,-0.0355"
+         id="path22301"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cc" />
+    </g>
+    <g
+       transform="matrix(-0.69974556,-0.71439216,-0.71439216,0.69974556,2238.5796,945.67674)"
+       id="g22307">
+      <path
+         style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#808080;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 1229.8512,205.63737 4.0365,-0.0355"
+         id="path22309"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cc" />
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path22311"
+         d="m 1232.8562,205.63737 3.0265,-0.0355"
+         style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#876e5d;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
+    <g
+       id="g22313"
+       transform="matrix(0.87723737,0.48005687,-0.48005687,0.87723737,261.56499,-558.99647)">
+      <path
+         sodipodi:nodetypes="cc"
+         inkscape:connector-curvature="0"
+         id="path22315"
+         d="m 1229.8512,205.63737 4.0365,-0.0355"
+         style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#808080;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         style="display:inline;opacity:1;fill:none;fill-rule:evenodd;stroke:#876e5d;stroke-width:0.99999994px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+         d="m 1232.8562,205.63737 3.0265,-0.0355"
+         id="path22317"
+         inkscape:connector-curvature="0"
+         sodipodi:nodetypes="cc" />
+    </g>
   </g>
   <g
      inkscape:groupmode="layer"
@@ -8752,7 +8799,8 @@
      inkscape:groupmode="layer"
      id="layer4"
      inkscape:label="Export Boxes"
-     style="display:inline;opacity:0">
+     style="display:inline;opacity:0"
+     sodipodi:insensitive="true">
     <rect
        style="color:#000000;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:0.25;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#ff00ff;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:2.11509562;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
        id="rect11893"

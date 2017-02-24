@@ -1,0 +1,12 @@
+[Headlines]
+YOU: The headline is about the economy. The Banks are warning about a downturn.
+
+[Gossip]
+YOU: There's a story in the gossip column about Lord Cheshire
+     and Pussy Galumps.
+
+     According to this, they've been romantically linked.
+LEARN: Cheshire/Pussy
+
+[Done]
+EXIT:

@@ -48,6 +48,94 @@ YOU: You play cards?
 THEY: I'm a sucker for a game of poker, I'm afraid.
 
 
+[Statue]? if .KnowsBB
+YOU: Do you know the significance of this statue? It belonged to Mr. Baines.
+THEY: I've... never seen it before.
+
+
+[Statue]? if .KnowsBB, Cheshire owned statue
+YOU: I understand this statue is actually yours.
+
+     But I found it in Baines' luggage.
+THEY: It... Blast.
+
+      It *was* mine. Look, I had a bit of a loss at cards. I wagered it, and
+      Baines won it.
+THEY: I didn't have a hand in his death, though, let me reassure you of that.
+
+      I lost it fair and square and I don't welch on my wagers!
+THEY: Here, take my room key -- I signed a Bill of Sale to Baines. It's needed
+      for the provenance. You can find a copy of it in my room.
+LEARN: Cheshire's Cabin
+
+
+[What is the statue?] if Cheshire's Cabin
+YOU: What is this statue?
+THEY: It's an antique Egyptian statue of some sort. It's been in my possession
+      for years.
+
+      Got it at an auction, if I recall correctly.
+
+      Actually -- if I recall correctly, I bought it to impress a girl I knew
+      at the time who was into archeology.
+YOU: So you don't know its historical value?
+THEY: No --
+
+      Oh! She was a Persian Longhair. Jessica. Or was that Margaret?
+
+
+[Why did you have the statue?] if Cheshire's Cabin
+YOU: Why did you bring the statue on this trip?
+THEY: It was going to be a gift, to an Oriental businessman I'm meeting in New
+      York.
+
+      I have a business venture, you see -- we're planning to sell them
+      telephony equipment, actually -- and apparently a gift is the fashion
+      among the Nipponese.
+THEY: It's devastating to have lost it. I imagine the whole thing will fall
+      through now.
+
+
+[Cheshire's Cabin]?
+YOU: I'm sorry, what was your cabin number?
+THEY: I'm in 37, next to that awful snorer Manx.
+LEARN: Snoring
+LEARN: Cheshire's Room
+
+[Pussy Galumps]
+YOU: Do you know Ms. Galumps?
+THEY: I know her well.
+
+
+[Pussy Galumps] if Cheshire/Pussy
+YOU: I understand you've been romantically linked to Ms. Galumps?
+THEY: Now, now... I won't comment on gossip.
+
+
+[Katerina la Gata] if Photo
+YOU: In your cabin, there's a photograph of Señorita la Gata.
+THEY: Oh, you know her! Isn't she wonderful?
+
+      An artist, a bon vivant -- I'm smitten!
+YOU: When did you meet?
+THEY: We met on board, my good fellow!
+
+      Chance!
+
+      Blind luck!
+LEARN: Cheshire/Katerina
+
+
+[Pussy Galumps] if Cheshire/Pussy, Cheshire/Katerina
+YOU: So the story in the newspaper about you and Ms. Galumps aren't true?
+THEY: Oh, well... Pussy's a lovely girl. We had dinner a couple of times back
+      at mine, in London.
+
+      But Katerina is a dream, an angel, a treasure.
+THEY: If you see her, will you tell her I said, "Hi!".
+LEARN: Pussy jilted
+
+
 [Bye]
 THEY: Very well. Perhaps you could rustle up a gin and tonic? Thanks.
 EXIT:

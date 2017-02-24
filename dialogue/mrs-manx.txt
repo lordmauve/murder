@@ -28,5 +28,35 @@ LEARN: Napkin
 LEARN: Mrs Manx saw Baines
 
 
+[RMS]?
+YOU: Can you describe, in layman's terms, what your husband does?
+THEY: He chairs the Royal Metaphysical Society.
+
+      I don't know exactly what they do, but it's all to do with being, and
+      belief, and the cosmos.
+YOU: Philosophy?
+THEY: Yes, but also man's place in the cosmos -- religion. Anthropology.
+LEARN: Royal Metaphysical Society
+
+
+[Snoring] if Long-time snorer
+YOU: How do you put up with your husband's snoring?
+THEY: I usually sleep in another room.
+
+      It's was more of a problem when we started sharing a cabin, but that's
+      been much better for the last couple of nights.
+YOU: How so, if you don't mind me asking?
+THEY: I had the barman find me some sleeping pills.
+
+      They work a charm!
+LEARN: Sleeping pills
+
+
+[Barman] if Sleeping pills
+YOU: The barman?
+THEY: The one over there.
+LEARN: Kibble had sleeping pills.
+
+
 [Bye]
 YOU: Thank you for speaking to me.

@@ -1,17 +1,28 @@
 [enter]
 YOU: Good evening, madam.
-THEY: Buena noches.
+THEY: Buena noches. It is so sad, Señor Baines...
+LEARN: .knows
+YOU: Then you have heard, madam?
+THEY: Some of the crew come up here to smoke; they were talking about it.
+LEARN: Smoking
+
+[enter] if .knows
+YOU: Good evening, madam.
+
 
 [Night Air]
 YOU: Aren't you cold, madam?
 THEY:
    I am all right for now, thank you.
 
-   Señor Baines... it is all too sad.
-LEARN: Buster Baines
+   I just love watching the moonlight glisten on the water. I want to paint it!
 
-[Buster Baines]?
-YOU: It is sad.
+
+[Buster Baines]
+YOU: Did you see Mr. Baines?
+THEY: Maybe, jes -- he passed here just after sunset.
+LEARN: Was on deck
+
 
 [Bye]
 THEY: See you later, señor.

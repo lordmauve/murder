@@ -1,0 +1,12 @@
+[enter]
+YOU: Huh, this is a photo of Señorita la Gata.
+LEARN: Photo
+EXIT:
+
+[enter] if Cheshire/Pussy
+YOU: This is a photo of... Señorita la Gata.
+
+     If Lord Cheshire has a photo of her... is the rumour about him and
+     Ms. Galumps untrue?
+LEARN: Photo
+EXIT:

@@ -1,3 +1,36 @@
+[enter]
+YOU: Calico, have you heard about the guest that's died?
+THEY: No.
+YOU: A Buster Baines.
+THEY: Oh, 'im. Thirty-five.
+LEARN: .knows
+
+[Last Seen]
+YOU:
+
+[Smoking]?
+YOU: Do you smoke?
+THEY: I do, sometimes, yes. Up on deck. Got a problem with that?
+LEARN: Calico smokes
+
+
+[Smoking] if Calico smokes, Kibble smokes
+YOU: Do you smoke alone, or with other crew members? Donnie, perhaps.
+THEY: Sure, Donnie and I go on smoke breaks.
+LEARN: Smoke breaks
+
+[Donnie Kibble] if Smoke breaks
+YOU: What can you tell me about Donnie Kibble?
+THEY: Oh, he's just a lad, really. We talk about ship life, gossip.
+
+      Talking of: he's head over heels for one of the passengers! Kitty Morgan?
+      Going to ask her out!
+
+      Well, good luck to him. Worst what can 'appen is that he's given the
+      boot.
+LEARN: Donnie/Kitty
+
+
 [Bye]
 THEY: If that's all, I got work to do.
 EXIT:

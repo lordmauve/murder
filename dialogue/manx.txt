@@ -29,6 +29,38 @@ YOU: Sir, your wife says she saw Baines here.
 THEY: I'm sorry, then; perhaps I was not paying attention.
 
 
+[Doctor] if .knowsBB
+YOU: I understand you're a doctor?
+
+     Perhaps you could take a look at the victim.
+THEY: Ha, ha, ha!
+
+      I'm not a medical doctor.
+
+      I study what it is to be, or not be, and why. I'm very well known in
+      the field. I chair the RMS, in fact!
+LEARN: RMS
+
+
+[RMS]?
+YOU: What is the RMS?
+THEY: A science, sir, a science! And an art. And above all, a philosophy!
+
+      To know *why*. *WHY!*
+
+      Tell me, have you ever thought about *why it is*?
+YOU: Why what is?
+THEY: Yes!
+
+
+[Snoring]?
+YOU: Sir, some of the guests are complaining about your snoring.
+THEY: Nothing to be done about that, I'm afraid.
+
+      I've been a snorer for years.
+LEARN: Long-time snorer
+
+
 [Bye]
 YOU: Thank you for your time.
 THEY: That's quite all right.

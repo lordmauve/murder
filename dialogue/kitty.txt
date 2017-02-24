@@ -1,0 +1,55 @@
+[enter]
+YOU: Hello, madam.
+THEY: Hey up. How can I 'elp ya?
+
+[Death]
+YOU: I'm afraid there's been a death on board.
+THEY: Golly!
+YOU: It's a Mr. Baines.
+THEY: Ey, I know 'im! He's been pestering me, 'e 'as.
+
+      I didn't 'urt 'im or owt, though!
+LEARN: .knows
+
+[Note] if Note, .knows
+YOU: I found this note: "KM, meet me..." See?
+THEY: Oh, the poor man was all "Howdy" and "Ahd shure like ter see yer agin".
+
+      I think he was trying it on a bit.
+
+      I told him no. He told me he'd leave a note in a thingummy on deck.
+
+
+[Newspaper]
+YOU: I see you have a newspaper. Might I take a quick look?
+THEY: Certainly, I'm done with it meself.
+LEARN: Newspaper
+
+
+[Cheshire/Pussy]?
+YOU: How about the Lord Cheshire story. You think there's any truth in it?
+THEY: Funny you should mention that. I used to work for 'im!
+
+      It was a few years ago, mind. I was 'is charwoman.
+
+      I'm sure it's true, the article. He was all over all kinds of women.
+LEARN: Kitty worked for Cheshire
+
+
+[Statue]?
+YOU: What do you think this thing is?
+THEY: Odd... I think I've seen it before. Might have been in the paper.
+
+
+[Statue] if Kitty worked for Cheshire
+YOU: Could you take a look again at this statue?
+THEY: I remember this! It was in Lord Cheshire's study.
+
+      I used to dust it. Ugly thing!
+LEARN: Cheshire owned statue
+
+
+[Bye]
+YOU: I'll leave you in peace.
+THEY: That's all right. Come back if you want to chat some more.
+EXIT:

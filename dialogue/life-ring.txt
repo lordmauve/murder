@@ -1,0 +1,7 @@
+[enter]
+YOU: It's just a life-ring.
+EXIT:
+
+[enter] if Note
+YOU: Nothing hidden here.
+EXIT:

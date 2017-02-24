@@ -1,0 +1,17 @@
+[enter]
+YOU: B.B. -- This must be Baines' trunk.
+YOU: ...
+YOU:
+   There's a little statue in it.
+
+   It looks Egyptian.
+
+   It has a few jewels and patches of gold, but I think it's ceramic. Antique?
+   Or older... antiquity?
+LEARN: Statue
+EXIT:
+
+
+[enter] if Statue
+YOU: There's nothing else in here. A few rags and some notes.
+EXIT:

@@ -24,6 +24,12 @@ YOU: When did you last see Baines?
 THEY: Earlier, I guess, at the bar.
 
 
+[Smoking]?
+YOU: Do you smoke?
+THEY: I nip up on deck for one every now and again, why?
+LEARN: Kibble smokes
+
+
 [Bye]
 YOU: Thanks.
 THEY: Yeah, well, do me a favour and leave me outta this, alright?

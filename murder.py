@@ -54,7 +54,7 @@ class DialogueMatch:
 
 
 # Choices that correspond to goodbyes
-GOODBYES = {'Bye'}
+GOODBYES = {'Bye', 'Done'}
 
 
 class DialogueMenu:
@@ -224,11 +224,11 @@ kitty_room = Actor('kitty-room')
 kitty_room.name = "Cabin 46"
 
 kitty = Actor('kitty-morgan', anchor=CANC)
-kitty.real_x = 200
+kitty.real_x = 100
 kitty.name = "Kitty Morgan"
 
 cheshire = Actor('lord-cheshire', anchor=CANC)
-cheshire.real_x = 400
+cheshire.real_x = 1000
 cheshire.name = "Lord Cheshire"
 
 manx = Actor('doctor-manx', anchor=CANC)
@@ -236,11 +236,11 @@ manx.real_x = 1200
 manx.name = "Doctor Manx"
 
 mrs_manx = Actor('mrs-manx', anchor=CANC)
-mrs_manx.real_x = 1300
+mrs_manx.real_x = 1260
 mrs_manx.name = "Mrs. Manx"
 
 kibble = Actor('donnie-kibble', anchor=CANC)
-kibble.real_x = 1000
+kibble.real_x = 400
 kibble.name = "Donnie Kibble"
 
 pussy = Actor('pussy-galumps', anchor=CANC)
@@ -364,6 +364,7 @@ class Lift(InteractableIf):
         return "Use lift"
 
     def use(self):
+        things_known.add('Lift')
         billy.in_lift = True
         music.play('elevator')
         music.set_volume(0.3)
@@ -385,7 +386,11 @@ class Observation(InteractableIf):
 
 
 bridge.objects = [Lift()]
-deck1.objects = [Lift()]
+deck1.objects = [
+    Lift(),
+    Observation(1065, 'Life Ring', 'life-ring', {'Napkin', 'Was on deck'}),
+    Observation(1185, 'Fire Hose', 'fire-hose', {'Napkin', 'Was on deck'}),
+]
 deck2.objects = [Lift()]
 deck3_start.objects = [
     Lift(must_know={'Two Glasses'}),
@@ -397,8 +402,8 @@ deck3.objects = [
 ]
 deck4.objects = [
     Lift(),
-    Door(500, kitty_room, 405, must_know={"Kitty's Room"}),
-    Door(850, luggage_room, 405, must_know={"Luggage Room Key"}),
+    Door(575, kitty_room, 405, must_know={"Kitty Morgan"}),
+    Door(850, luggage_room, 55, must_know={"Luggage"}),
 ]
 baines_room.objects = [
     Door(55, deck3_start, 310, "To the corridor"),
@@ -407,12 +412,16 @@ baines_room.objects = [
 ]
 cheshire_room.objects = [
     Door(405, deck3, 875, "To the corridor"),
+    Observation(280, 'Photo', 'photo', {"Katerina la Gata"}),
+    Observation(225, 'Document', 'document'),
 ]
 kitty_room.objects = [
-    Door(405, deck4, 500, "To the corridor"),
+    Door(405, deck4, 575, "To the corridor"),
+    Observation(235, 'Newspaper', 'newspaper', {'Newspaper'}),
 ]
 luggage_room.objects = [
-    Door(405, deck4, 850, "To the corridor"),
+    Door(55, deck4, 850, "To the corridor"),
+    Observation(180, 'Trunk', 'trunk')
 ]
 
 
@@ -597,7 +606,7 @@ def on_key_down_dialogue(key):
     elif key == keys.RETURN:
         billy.dialogue_menu.select()
     elif key == keys.ESCAPE:
-        back = getattr(billy.dialogue_menu, 'back')
+        back = getattr(billy.dialogue_menu, 'back', None)
         if back:
             back()
 
@@ -636,9 +645,9 @@ class DialogueChoices:
         for i, opt in enumerate(self.choices):
             key, is_done = opt
             if is_done:
-                color = '#ff4444' if i == self.selected else '#cc0000'
+                color = '#ff4444' if i == self.selected else '#aa0000'
             else:
-                color = '#cccccc' if i != self.selected else 'white'
+                color = '#aaaaaa' if i != self.selected else 'white'
             screen.draw.text(
                 key,
                 bottomleft=(30, 260 + 30 * i),
@@ -648,7 +657,7 @@ class DialogueChoices:
             )
             if is_done:
                 screen.draw.text(
-                    '-' * len(key),
+                    '-' * int(len(key) * 1.6),
                     bottomleft=(30, 260 + 30 * i),
                     fontname=FONT,
                     fontsize=20,
@@ -779,7 +788,7 @@ class GameMenu:
 
     def draw(self):
         for i, opt in enumerate(self.choices):
-            color = '#cccccc' if i != self.selected else 'white'
+            color = '#aaaaaa' if i != self.selected else 'white'
             screen.draw.text(
                 opt,
                 midtop=(WIDTH // 2, 260 + 30 * i),
