@@ -630,6 +630,7 @@ def play_billy_anim(frames):
     billy.frames = cycle(frames)
     next_frame()
     clock.schedule_interval(next_frame, 0.07)
+    sounds.footsteps.play(-1)
 
 
 def stop_billy_anim():
@@ -637,6 +638,7 @@ def stop_billy_anim():
     clock.unschedule(next_frame)
     if billy.dir and not isinstance(billy.image, str):
         billy.image = 'billy-standing-' + billy.dir
+    sounds.footsteps.stop()
 
 
 def next_frame():
