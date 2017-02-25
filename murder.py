@@ -340,6 +340,14 @@ class Door(InteractableIf):
 def enter(deck, pos=None):
     """Enter the given deck/room at the given x pos."""
     global current_deck, viewport
+    screen.clear()
+    screen.draw.text(
+        current_deck.name,
+        topright=(WIDTH - 10, 10),
+        fontname=FONT,
+        fontsize=20,
+        color='#cccccc'
+    )
     current_deck = deck
     if pos is not None:
         billy.real_x = pos
@@ -472,14 +480,17 @@ def reload_dialogue():
 reload_dialogue()
 game_screen = None
 
+TITLE_BAR = Rect(0, 0, WIDTH, 50)
 PANEL = Rect(0, 50, WIDTH, 145)
+TEXT_AREA = Rect(0, 195, WIDTH, HEIGHT - 195)
 BLACK = 0, 0, 0
+
+
 
 def draw():
     if game_screen:
         return game_screen.draw()
 
-    screen.clear()
     if billy.in_lift:
         draw_lift()
     else:
@@ -487,6 +498,7 @@ def draw():
 
 
 def draw_lift():
+    screen.clear()
     lift.draw()
     screen.draw.text(
         'Deck %s: %s' % (deck_num or "A", current_deck.name),
@@ -497,7 +509,12 @@ def draw_lift():
     )
 
 
+def clear_text_area():
+    screen.draw.filled_rect(TEXT_AREA, BLACK)
+
+
 def draw_deck():
+    screen.draw.filled_rect(PANEL, BLACK)
     vx, vy = viewport
     current_deck.left = -vx
     current_deck.top = 50
@@ -507,28 +524,28 @@ def draw_deck():
         a.draw()
     billy.x = billy.real_x - vx
     billy.draw()
-    screen.draw.text(
-        current_deck.name,
-        topright=(WIDTH - 10, 10),
-        fontname=FONT,
-        fontsize=20,
-        color='#cccccc'
-    )
-    if billy.dialogue_with:
-        billy.dialogue_menu.draw()
-    else:
-        draw_action_caption()
 
 
-def draw_action_caption():
+action_caption = None
+
+
+def update_action_caption():
+    global action_caption
+    new_caption = None
     for a in current_deck.actors:
         if billy.colliderect(a):
-            draw_caption('Talk to %s' % a.name)
-            return
-    for o in current_deck.objects:
-        if o.is_next_to():
-            draw_caption(o.caption())
-            return
+            new_caption = 'Talk to %s' % a.name
+            break
+    else:
+        for o in current_deck.objects:
+            if o.is_next_to():
+                new_caption = o.caption()
+                break
+    if new_caption != action_caption:
+        clear_text_area()
+        if new_caption:
+            draw_caption(new_caption)
+        action_caption = new_caption
 
 
 def draw_caption(caption):
@@ -544,6 +561,7 @@ def draw_caption(caption):
 def update():
     if not billy.dialogue_with and not game_screen:
         move_billy()
+        update_action_caption()
 
 
 def move_billy():
@@ -607,7 +625,7 @@ def play_billy_anim(frames):
 def stop_billy_anim():
     billy.anim = None
     clock.unschedule(next_frame)
-    if billy.dir:
+    if billy.dir and not isinstance(billy.image, str):
         billy.image = 'billy-standing-' + billy.dir
 
 
@@ -695,6 +713,8 @@ class DialogueChoices:
             else:
                 billy.dialogue_with = None
                 billy.dialogue_menu = None
+                clear_text_area()
+                return
         billy.dialogue_menu = self
 
         for selected, (key, done) in enumerate(self.choices):
@@ -710,10 +730,12 @@ class DialogueChoices:
             )
         else:
             self.offset = 0
+        self.draw()
 
     MAX_SHOW = 11
 
     def draw(self):
+        clear_text_area()
         choices = self.choices[self.offset:self.offset + self.MAX_SHOW]
         if self.offset > 0:
             screen.draw.text(
@@ -760,6 +782,7 @@ class DialogueChoices:
             self.offset = max(self.selected, 0)
         elif self.selected >= self.offset + self.MAX_SHOW:
             self.offset = min(self.selected, len(self.choices) - self.MAX_SHOW)
+        self.draw()
 
     def down(self):
         self.selected = (self.selected + 1) % len(self.choices)
@@ -767,6 +790,7 @@ class DialogueChoices:
             self.offset = min(self.selected - self.MAX_SHOW + 1, len(self.choices) - self.MAX_SHOW)
         elif self.selected < self.offset:
             self.offset = max(self.selected, 0)
+        self.draw()
 
     def select(self):
         key, done = self.choices[self.selected]
@@ -784,6 +808,7 @@ class DialogueChat:
         self.select()
 
     def draw(self):
+        clear_text_area()
         if self.action == 'YOU':
             color = '#cc4466'
             screen.draw.text(
@@ -837,6 +862,9 @@ class DialogueChat:
         if self.action == 'EXIT' and billy.dialogue_menu is self:
             billy.dialogue_menu = None
             billy.dialogue_with = None
+            clear_text_area()
+        else:
+            self.draw()
 
     def up(self):
         """no-op."""
@@ -847,6 +875,7 @@ class DialogueChat:
 
 def start_dialogue(character):
     """Start a dialogue with a character."""
+    stop_billy_anim()
     things_known.add(character.name)  # Learn about this character
     try:
         dialogue = character.dialogue
@@ -886,8 +915,10 @@ class GameMenu:
 
     def show(self):
         billy.dialogue_with = billy.dialogue_menu = self
+        self.draw()
 
     def draw(self):
+        clear_text_area()
         for i, opt in enumerate(self.choices):
             color = '#aaaaaa' if i != self.selected else 'white'
             screen.draw.text(
@@ -900,16 +931,20 @@ class GameMenu:
 
     def up(self):
         self.selected = (self.selected - 1) % len(self.choices)
+        self.draw()
 
     def down(self):
         self.selected = (self.selected + 1) % len(self.choices)
+        self.draw()
 
     def select(self):
         choice = self.choices[self.selected]
+        self.draw()
         self.do(choice)
 
     def close(self):
         billy.dialogue_with = billy.dialogue_menu = None
+        clear_text_area()
 
 
 class PauseMenu(GameMenu):
@@ -1040,8 +1075,9 @@ def start_ending():
     billy.image = 'billy-standing'
     kitty.image = 'kitty-morgan'
     billy.real_x = 475
-    billy.dialogue_with = captain
     clock.unschedule(SaveMenu.autosave)
+    draw_deck()
+    billy.dialogue_with = captain
     DialogueChoices(load_dialogue('ending')).start()
 
 
@@ -1060,9 +1096,10 @@ class IntroScreen:
         game_screen = self
         clock.schedule_interval(self.update_ship, 0.1)
         clock.schedule_interval(self.update_moon, 0.3)
-        clock.schedule_interval(self.next_text, 5)
+        clock.schedule_unique(self.next_text, 5)
         self.next_text()
         music.play('deck1')
+        billy.dialogue_with = billy.dialogue_menu = self
 
     def update_ship(self):
         self.ship.x += 1
@@ -1103,14 +1140,29 @@ class IntroScreen:
     def next_text(self):
         try:
             self.text = next(self.itexts)
-            self.drawn = False
         except StopIteration:
             self.end()
+        else:
+            self.drawn = False
+            clock.schedule_unique(self.next_text, 5)
 
     def end(self):
         global game_screen
         music.stop()
         game_screen = None
+        billy.dialogue_with = billy.dialogue_menu = None
+        clear_text_area()
+
+    def back(self):
+        self.end()
+
+    def select(self):
+        self.next_text()
+
+
+    def up(self):
+        """no-op"""
+    down = up
 
 
 clock.schedule_unique(SaveMenu.autosave, AUTOSAVE_INTERVAL)
