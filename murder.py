@@ -162,7 +162,7 @@ def load_dialogue(fname):
             mo = re.match('^([A-Z]+): *(.*)', l)
             if mo:
                 action, value = mo.groups()
-                if action not in ('YOU', 'THEY', 'EXIT', 'LEARN'):
+                if action not in ('YOU', 'THEY', 'EXIT', 'LEARN', 'EXEC'):
                     raise ValueError(
                         'invalid key %r, %s, line %d' % (action, path, lineno)
                     )
@@ -638,19 +638,37 @@ class DialogueChoices:
         for selected, (key, done) in enumerate(self.choices):
             if not done:
                 self.selected = selected
-                return
-        self.selected = 0
+                break
+        else:
+            self.selected = 0
+        if len(self.choices) > self.MAX_SHOW:
+            self.offset = min(
+                max(0, self.selected - self.MAX_SHOW // 2),
+                len(self.choices) - self.MAX_SHOW
+            )
+
+    MAX_SHOW = 11
 
     def draw(self):
-        for i, opt in enumerate(self.choices):
+        choices = self.choices[self.offset:self.offset + self.MAX_SHOW]
+        if self.offset > 0:
+            screen.draw.text(
+                '/\\',
+                topleft=(30, 230),
+                fontname=FONT,
+                fontsize=14,
+                color='#aaaaaa'
+            )
+        for i, opt in enumerate(choices):
+            choice_num = i + self.offset
             key, is_done = opt
             if is_done:
-                color = '#ff4444' if i == self.selected else '#aa0000'
+                color = '#ff4444' if choice_num == self.selected else '#aa0000'
             else:
-                color = '#aaaaaa' if i != self.selected else 'white'
+                color = '#aaaaaa' if choice_num != self.selected else 'white'
             screen.draw.text(
                 key,
-                bottomleft=(30, 260 + 30 * i),
+                bottomleft=(60, 260 + 30 * i),
                 fontname=FONT,
                 fontsize=20,
                 color=color
@@ -658,17 +676,33 @@ class DialogueChoices:
             if is_done:
                 screen.draw.text(
                     '-' * int(len(key) * 1.6),
-                    bottomleft=(30, 260 + 30 * i),
+                    bottomleft=(60, 260 + 30 * i),
                     fontname=FONT,
                     fontsize=20,
                     color=color
                 )
+        if self.offset + self.MAX_SHOW < len(self.choices):
+            screen.draw.text(
+                '\/',
+                bottomleft=(30, 240 + 30 * self.MAX_SHOW),
+                fontname=FONT,
+                fontsize=14,
+                color='#aaaaaa'
+            )
 
     def up(self):
         self.selected = (self.selected - 1) % len(self.choices)
+        if self.selected < self.offset:
+            self.offset = max(self.selected, 0)
+        elif self.selected >= self.offset + self.MAX_SHOW:
+            self.offset = min(self.selected, len(self.choices) - self.MAX_SHOW)
 
     def down(self):
         self.selected = (self.selected + 1) % len(self.choices)
+        if self.selected >= self.offset + self.MAX_SHOW:
+            self.offset = min(self.selected - self.MAX_SHOW + 1, len(self.choices) - self.MAX_SHOW)
+        elif self.selected < self.offset:
+            self.offset = max(self.selected, 0)
 
     def select(self):
         key, done = self.choices[self.selected]
@@ -730,6 +764,9 @@ class DialogueChat:
                 return
             if self.action == 'LEARN':
                 things_known.add(self.text)
+                continue
+            if self.action == 'EXEC':
+                exec(self.text, globals())
                 continue
             break
 

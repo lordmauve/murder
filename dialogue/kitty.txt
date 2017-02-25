@@ -11,10 +11,10 @@ YOU: You know him?
 THEY: I do know 'im! Me an' 'im have been talking a lot. I was getting fond
       of 'im.
 THEY: Oh, heck, that's so sad... so sad... *sniff*
-
 LEARN: .knows
 
-[Buster Baines]
+
+[Buster Baines] if .knows
 YOU: How did you meet Mr. Baines?
 THEY: I bumped into 'im just here outside my room. 'E was down here to
       use the luggage room.
@@ -34,7 +34,7 @@ THEY: Oh, the poor man.
       leave me love notes in a thingummy on deck.
 
 
-[Newspaper]
+[Newspaper] if .knows
 YOU: I see you have a newspaper. Might I take a quick look?
 THEY: Certainly, I'm done with it meself.
 LEARN: Newspaper

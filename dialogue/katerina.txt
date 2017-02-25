@@ -24,7 +24,7 @@ THEY: Maybe, jes -- he passed here just after sunset.
 LEARN: Was on deck
 
 
-[Statue]
+[Statue]?
 YOU: Can you tell me about this statue?
 THEY: It is beautiful!
 

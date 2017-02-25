@@ -3,9 +3,9 @@ YOU: The cabinet is unlocked.
      There's a note in here...
 YOU: "KM,
 
-   Please, meet me in my room tonight.
+   Please, I must see you again.
 
-   It's number 35.
+   Join in my room tonight. It's number 35.
 
    BB"
 YOU: I wonder who KM is.

@@ -6,5 +6,7 @@ YOU:
 
    I'd better investigate.
 YOU: There's nothing in his pockets except a key.
+
+     I'll keep it for now.
 LEARN: Luggage key
 EXIT:

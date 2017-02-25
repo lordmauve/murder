@@ -1,5 +1,7 @@
 [enter]
 YOU: B.B. -- This must be Baines' trunk.
+
+[Use key]
 YOU: ...
 YOU:
    There's a little statue in it.
@@ -9,6 +11,10 @@ YOU:
    It has a few jewels and patches of gold, but I think it's ceramic. Antique?
    Or older... antiquity?
 LEARN: Statue
+EXIT:
+
+
+[Done]
 EXIT:
 
 

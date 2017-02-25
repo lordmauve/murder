@@ -60,7 +60,7 @@ THEY: Oh, that woman! She talks and talks, doesn't she? She's quite the gossip.
 LEARN: Calico talks
 
 
-[Calico Croker]? if Calico talks, Calico doesn't talk to Katerina, Calico doesn't talk to Cheshire, Calico doesn't talk to Pussy
+[Calico Croker]? if Calico talks, Calico doesn't talk to Katerina, Calico doesn't talk to Cheshire, Calico doesn't talk to Pussy, Guest's revenge
 YOU: You say Calico Croker talks to you? What about?
 THEY: Stories. Other guests.
 
@@ -71,10 +71,10 @@ THEY: Stories. Other guests.
 LEARN: Calico told Manx
 
 
-[Barman] if Sleeping pills
+[Barman] if Sleeping pills, Kibble accused
 YOU: The barman?
 THEY: The one over there.
-LEARN: Kibble had sleeping pills.
+LEARN: Kibble gave Mrs Manx pills
 
 
 [Bye]

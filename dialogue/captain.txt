@@ -71,5 +71,13 @@ THEY: If you find anything, please report to me.
 YOU: Aye-aye, sir.
 EXIT:
 
+
+[I know what happened] if Manx accused, Kibble accused, Kibble gave Mrs Manx pills
+YOU: I know what happened.
+THEY: Then I'll gather everyone in the bar to hear it.
+EXEC: start_ending()
+EXIT:
+
+
 [Bye] if Lift
 YOU: Thank you, captain.

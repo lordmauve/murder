@@ -33,6 +33,8 @@ LEARN: Kibble smokes
 [Smoking] if Calico smokes, Kibble smokes
 YOU: Do you meet up with others when you smoke? Calico, perhaps.
 THEY: Yeah, she an' I go for a fag every now and again.
+
+      Can't be seen smoking in front of the guests.
 LEARN: Smoke breaks
 
 
@@ -55,6 +57,33 @@ THEY: Oh, yeah! Calico told me that one of the guests was ranting to her about
 YOU: Wow.
 LEARN: Guest's revenge
 
+
+[Kitty Morgan]?
+YOU: Do you know Kitty Morgan?
+THEY: Yeah, I do a bit. Mind your own business.
+
+
+[Kitty Morgan] if Donnie/Kitty
+YOU: You had a thing for Ms. Morgan, didn't you?
+THEY: How'd you know about that?
+
+      Calico, I'll bet.
+
+      Ok, so what if I did?
+LEARN: .love
+
+
+[Note] if Donnie/Kitty and .love
+YOU: You found this note, hidden in an cabinet on deck, didn't you?
+
+     Perhaps you even saw Mr. Baines leaving it.
+THEY: No.
+YOU: And you realised Baines was also interested in Ms. Morgan.
+THEY: No! Shut up, Billy!
+YOU: Did you want to get Baines out of the way? So you could have Kitty to
+     yourself?
+THEY: I didn't bloody kill him though!
+LEARN: Kibble accused
 
 
 [Bye]

@@ -5,6 +5,10 @@ YOU: A Buster Baines.
 THEY: Oh, 'im. Thirty-five.
 LEARN: .knows
 
+[enter] if .knows
+THEY: 'Ello, Billy. What's up?
+
+
 [Buster Baines]?
 YOU: What can you tell me about the dead man, Baines?
 THEY: American. Always wore a hat. That's all I know.
@@ -43,7 +47,7 @@ THEY: Did you know, that the wife of that Egyptologist, she used to be a
 LEARN: Calico knows Manx is an Egyptologist
 
 
-[Statue]? if Pussy didn't steal, Bill of Sale
+[Statue]? if Guest's revenge, Bill of Sale
 YOU: Donnie told me that you overheard Ms. Galumps talking about a statue?
 THEY: That loud-mouth. So what if I did? I overhear a lot of things.
 
@@ -60,6 +64,11 @@ YOU: But to cover your tracks, you "told" Doctor Manx about it, by gossiping
 THEY: You can't prove any of that.
 LEARN: Calico plot
 EXIT:
+
+
+[enter] if Calico plot
+THEY: Go away.
+
 
 [Bye]
 THEY: If that's all, I got work to do.

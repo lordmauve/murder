@@ -65,7 +65,14 @@ LEARN: Long-time snorer
 YOU: Have you seen this statue?
 THEY: Where did you get this? I've not seen it. No. I know nothing about it.
 
-      It's Bastet, of course.
+
+[Statue]? if .speciality
+YOU: So you know what this statue is?
+THEY: It's Bastet, of course. Egyptian goddess. This is an original idol, from
+      the early second dynasty!
+THEY: Perhaps I could hold onto it for a more detailed study?
+YOU: I think I'll keep it for now.
+THEY: I'd be very keen to see it again later. Very keen.
 LEARN: .bastet
 
 
@@ -77,6 +84,12 @@ THEY: That is *my* theory! Cohen is trying to cash in on my big idea, with all
 
       It's *my* lifetime's work and I will not see him swoop in and steal the
       glory!
+LEARN: .dedicated
+
+
+[Dedication] if .dedicated
+YOU: Would you kill to preserve your lifetime's work?
+THEY: I most certainly would not!
 
 
 [Calico Croker]?
@@ -84,9 +97,15 @@ YOU: Do you know the housekeeper, Calico Croker?
 THEY: No.
 
 
-[Calico Croker] if Calico plot
+[Calico Croker] if Calico plot, .dedicated
 YOU: The housekeeper, Calico Croker, played you.
 THEY: I don't know what you're talking about, sir.
+YOU: She told you there was an important Egyptian artifact on board.
+THEY: I don't recall any such conversation.
+YOU: She hoped that you'd "acquire" it, and she might then take it off you,
+     seeing you as an easier mark than Mr. Baines.
+THEY: Preposterous!
+LEARN: Manx accused
 
 
 [Bye]
