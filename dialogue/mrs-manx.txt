@@ -21,10 +21,12 @@ YOU: Hello again, madam.
 
 [Last Seen] if .knows
 YOU: When did you last see Mr. Baines?
-THEY: If it's the gentleman in the hat - it was earlier tonight.
+THEY: If it's the gentleman in the hat -- it was tonight at dinner. We sat
+      next to him at the first-class table.
 
-   He was writing something on a napkin.
-LEARN: Napkin
+      I remember he was not talkative: he was writing something on a
+      slip of paper.
+LEARN: Wrote note
 LEARN: Mrs Manx saw Baines
 
 
@@ -48,7 +50,7 @@ THEY: No, but I've been hearing lots of gossip about him. How we's been linked
 LEARN: .gossip
 
 
-[Gossip] if .gossip and Cheshire/Newspaper
+[Gossip] if .gossip, Cheshire/Newspaper
 YOU: You read about Lord Cheshire in the newspaper?
 THEY: No, I actually heard about it from the lady who makes up our cabin.
 LEARN: Calico talks

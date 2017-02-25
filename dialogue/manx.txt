@@ -76,7 +76,7 @@ THEY: I'd be very keen to see it again later. Very keen.
 LEARN: .bastet
 
 
-[Archeological Theory]? if .bastet and .speciality
+[Archeological theory]? if .bastet, .speciality
 YOU: What do you think about Cohen's theory that ancient Egyptians worshipped
      humans?
 THEY: That is *my* theory! Cohen is trying to cash in on my big idea, with all

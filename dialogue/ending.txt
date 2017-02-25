@@ -1,9 +1,84 @@
 [enter]
 THEY: Thanks for coming.
 
-      Billy here would like to let us know what happened.
+      Billy here would like to let us know what happened in the matter of
+      Mr. Baines' untimely death.
 
       Billy, please, go on.
+
 YOU: Buster Baines was murdered by people on this ship.
 
      The reason involves love, money, and reputation.
+
+YOU: Buster Baines fell in love with a woman on board this ship, Kitty Morgan.
+
+     Little did he know that one of the crew members, Donnie Kibble, also had
+     affections for Ms. Morgan.
+
+     While smoking, Mr. Kibble found a note that Mr. Baines had tried to pass
+     to Ms. Morgan, and he decided to act.
+
+YOU: Earlier, in a game of cards, Lord Cheshire had staked an extremely
+     expensive Egyptian antiquity, which he thereby lost to victim, Mr. Baines.
+
+YOU: Few others knew this, but Calico Croker, the housekeeper, learning of the
+     statue and its sale, cunningly let this "slip" in a conversation in Mr.
+     and Mrs. Manx's room, believing this would create the opportunity to
+     steal it herself.
+
+YOU: Manx, an anthropologist spcialising in Ancient Egypt, had become so
+     determined to out-do a rival, that he attempted to obtain the statue,
+     without considering the cost to Baines.
+
+YOU: The means for both crimes was provided coincidentally by Mrs. Manx,
+     who asked Donnie Kibble to find her some sleeping pills from the ship's
+     stores.
+
+YOU: Mr. Manx slipped a pill into Baines' food at dinner tonight.
+
+     And Mr. Kibble dissolved one in a drink he served him.
+YOU: I don't believe either man had motive enough to kill Mr. Baines.
+
+     Kibble drugged Baines so he could make moves on Ms. Morgan.
+
+     Manx drugged Baines so he could search for the Bastet idol amongst
+     Baines' possessions.
+YOU: It was the unfortunate collision of both of these plots that gave
+     Baines the overdose that killed him.
+
+THEY: Astonishing. I just need to know one thing, Billy. How would you
+      apportion blame? Which was the greater of the two evils?
+
+
+[Manx]
+YOU: An erudite man, Mr. Karl Manx was enraged about his rival's discoveries
+     and recognition, and his act was cold-blooded.
+YOU: Kibble's act, by contrast, was motivated by passion -- and while we cannot
+     forgive Kibble, we can perhaps sympathise with his motives.
+YOU: Mr. Karl Manx's crime was worse.
+LEARN: I choose Manx
+EXEC: game_over()
+EXIT:
+
+
+[Kibble]
+YOU: Mr. Donnie Kibble drugged, and thereby killed, an innocent man for no
+     other reason than to pursue a lady.
+YOU: Manx's act, was heinous, but done in pursuit of knowledge.
+
+     We should not forget he was exploited by Croker in hope of her own gain.
+YOU: Mr. Kibble's crime was worse.
+LEARN: I choose Kibble
+EXEC: game_over()
+EXIT:
+
+
+[Neither]
+YOU: Neither crime is any worse than the other.
+
+     Baines would still be alive today if neither had acted.
+
+     Though neither knew of the other's plot, they must both be treated as
+     conspirators in the murder.
+EXEC: game_over()
+EXIT:

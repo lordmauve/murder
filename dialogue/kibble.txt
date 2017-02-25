@@ -73,7 +73,7 @@ THEY: How'd you know about that?
 LEARN: .love
 
 
-[Note] if Donnie/Kitty and .love
+[Note] if Donnie/Kitty, .love
 YOU: You found this note, hidden in an cabinet on deck, didn't you?
 
      Perhaps you even saw Mr. Baines leaving it.

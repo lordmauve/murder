@@ -3,14 +3,14 @@ YOU: The headline is about the economy. The Banks are warning about a downturn.
 
 
 [Features Section]
-YOU: "Archeologists believe ancient Mediterranean peoples may have believed
-     humans were gods."
+YOU: "Archeologists are claiming ancient Mediterranean peoples may have
+      believed humans were gods."
 
-     "Professor Cohen believes new finds in Greece may provide the crucial
-     evidence."
+     "Professor Cohen believes new finds in Heliopolis may provide the
+      crucial evidence."
 
      "The discovery would turn our view of ancient history on its head and
-     surely bag a knighthood for whoever can prove it."
+      could earn Cohen a knighthood if he can prove it."
 LEARN: Archeological theory
 
 

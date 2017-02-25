@@ -388,8 +388,8 @@ class Observation(InteractableIf):
 bridge.objects = [Lift()]
 deck1.objects = [
     Lift(),
-    Observation(1065, 'Life Ring', 'life-ring', {'Napkin', 'Was on deck'}),
-    Observation(1185, 'Fire Hose', 'fire-hose', {'Napkin', 'Was on deck'}),
+    Observation(1065, 'Life Ring', 'life-ring', {'Wrote note', 'Was on deck'}),
+    Observation(1185, 'Fire Hose', 'fire-hose', {'Wrote note', 'Was on deck'}),
 ]
 deck2.objects = [Lift()]
 deck3_start.objects = [
@@ -646,6 +646,8 @@ class DialogueChoices:
                 max(0, self.selected - self.MAX_SHOW // 2),
                 len(self.choices) - self.MAX_SHOW
             )
+        else:
+            self.offset = 0
 
     MAX_SHOW = 11
 
@@ -767,7 +769,7 @@ class DialogueChat:
                 continue
             if self.action == 'EXEC':
                 exec(self.text, globals())
-                continue
+                return
             break
 
         if self.action == 'EXIT':
@@ -959,8 +961,33 @@ class SaveMenu(GameMenu):
         PauseMenu().show()
 
 
+def start_ending():
+    global current_deck
+    current_deck = Actor('deck2')
+    current_deck.name = "Lounge"
+    current_deck.actors = [
+        captain, cheshire, calico, katerina, manx, mrs_manx, pussy,
+        kibble, kitty
+    ]
+    for i, a in enumerate(current_deck.actors):
+        a.real_x = 100 + 37 * i
+    captain.real_x -= 30
+    pussy.image = 'pussy-end'
+    kibble.image = 'donnie-end'
+    cheshire.image = 'lord-cheshire-end'
+    billy.image = 'billy-standing'
+    billy.real_x = 475
+    billy.dialogue_with = captain
+    clock.unschedule(SaveMenu.autosave)
+    DialogueChoices(load_dialogue('ending')).start()
+
+
 clock.schedule_unique(SaveMenu.autosave, AUTOSAVE_INTERVAL)
 try:
     LoadMenu.load('Auto-save')
 except IOError:
     pass
+
+
+#for t in sorted(things_known):
+#    print(repr(t))
