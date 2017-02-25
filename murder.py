@@ -14,7 +14,10 @@ from collections import OrderedDict, defaultdict
 from abc import ABCMeta, abstractmethod
 import pygame.transform
 from itertools import cycle, chain
+import time
 
+
+has_screen = False
 basedir = Path(pgzero.loaders.root)
 
 
@@ -71,22 +74,14 @@ class DialogueMenu:
         return all_done.setdefault(self.path, defaultdict(set))
 
     def add_choice(self, key, cond, steps):
-        if '.' in key:
-            m = self
-            parts = key.split('.')
-            key = parts.pop()
-            for path in parts:
-                m = m.choices[path] = DialogueMenu(self.path + '.' + path)
-            m.add_condition(key, cond, steps)
-        else:
-            if key in GOODBYES:
-                if steps[-1][0] != 'EXIT':
-                    steps.append(('EXIT', ''))
-            try:
-                match = self.choices[key]
-            except KeyError:
-                match = self.choices[key] = DialogueMatch()
-            match.add_condition(cond, steps)
+        if key in GOODBYES:
+            if steps[-1][0] != 'EXIT':
+                steps.append(('EXIT', ''))
+        try:
+            match = self.choices[key]
+        except KeyError:
+            match = self.choices[key] = DialogueMatch()
+        match.add_condition(cond, steps)
 
     def get_enter(self):
         enter = self.choices.get('enter')
@@ -209,36 +204,41 @@ deck2.music = "deck2"
 deck3_start = Actor('deck3-start')
 deck3 = Actor('deck3-later')
 deck3_start.name = deck3.name = "First-class Cabins"
+deck3.music = "deck3"
 
 deck4 = Actor('deck4')
 deck4.name = "Second-class Cabins"
+deck4.music = "deck4"
 
 baines_room = Actor('baines-room')
 baines_room.name = "Cabin 35"
 
 cheshire_room = Actor('cheshire-room')
 cheshire_room.name = "Cabin 37"
+cheshire_room.music = "deck3"
 
 luggage_room = Actor('luggage-room')
 luggage_room.name = "Luggage Room"
+luggage_room.music = "deck4"
 
 kitty_room = Actor('kitty-room')
 kitty_room.name = "Cabin 46"
+kitty_room.music = "deck4"
 
 kitty = Actor('kitty-sitting', anchor=CANC)
 kitty.real_x = 300
 kitty.name = "Kitty Morgan"
 
 cheshire = Actor('lord-cheshire', anchor=CANC)
-cheshire.real_x = 1000
+cheshire.real_x = 1200
 cheshire.name = "Lord Cheshire"
 
 manx = Actor('doctor-manx', anchor=CANC)
-manx.real_x = 1200
+manx.real_x = 1000
 manx.name = "Doctor Manx"
 
 mrs_manx = Actor('mrs-manx', anchor=CANC)
-mrs_manx.real_x = 1260
+mrs_manx.real_x = 940
 mrs_manx.name = "Mrs. Manx"
 
 kibble = Actor('donnie-kibble', anchor=CANC)
@@ -254,7 +254,7 @@ katerina.real_x = 400
 katerina.name = "Katerina la Gata"
 
 calico = Actor('calico-croker', anchor=CANC)
-calico.real_x = 500
+calico.real_x = 670
 calico.name = "Calico Croker"
 
 captain = Actor('captain', anchor=CANC)
@@ -337,17 +337,21 @@ class Door(InteractableIf):
         enter(self.dest, self.dest_pos)
 
 
+current_music = None
+
+
 def enter(deck, pos=None):
     """Enter the given deck/room at the given x pos."""
-    global current_deck, viewport
-    screen.clear()
-    screen.draw.text(
-        current_deck.name,
-        topright=(WIDTH - 10, 10),
-        fontname=FONT,
-        fontsize=20,
-        color='#cccccc'
-    )
+    global current_deck, viewport, current_music
+    if has_screen:
+        screen.clear()
+        screen.draw.text(
+            current_deck.name,
+            topright=(WIDTH - 10, 10),
+            fontname=FONT,
+            fontsize=20,
+            color='#cccccc'
+        )
     current_deck = deck
     if pos is not None:
         billy.real_x = pos
@@ -361,8 +365,10 @@ def enter(deck, pos=None):
     except AttributeError:
         music.stop()
     else:
-        music.play(music_name)
-        music.set_volume(0.6)
+        if current_music != deck.music:
+            current_music = music_name
+            music.play(music_name)
+            music.set_volume(0.6)
 
 
 class Lift(InteractableIf):
@@ -375,8 +381,10 @@ class Lift(InteractableIf):
         return "Use lift"
 
     def use(self):
+        global current_music
         things_known.add('Lift')
         billy.in_lift = True
+        current_music = 'elevator'
         music.play('elevator')
         music.set_volume(0.3)
 
@@ -488,6 +496,8 @@ BLACK = 0, 0, 0
 
 
 def draw():
+    global has_screen
+    has_screen = True
     if game_screen:
         return game_screen.draw()
 
@@ -634,7 +644,6 @@ def next_frame():
 
 
 TWEEN = 'accel_decel'
-
 
 
 def on_key_down(key):
@@ -865,10 +874,11 @@ class DialogueChat:
             break
 
         if action == 'EXIT':
-            if billy.dialogue_menu is self:
+            if billy.dialogue_menu is self or billy.dialogue_menu is self.parent:
                 billy.dialogue_menu = None
                 billy.dialogue_with = None
                 clear_text_area()
+                SaveMenu.autosave()
         else:
             self.draw()
 
@@ -959,7 +969,7 @@ class PauseMenu(GameMenu):
         self.choices = [
             'Load Game',
             'Save Game',
-            'Auto-save & Exit'
+            'Quick-save & Exit'
         ]
         if not any(savesdir.glob('*.save')):
             del self.choices[:1]
@@ -1016,7 +1026,6 @@ class LoadMenu(GameMenu):
         all_done = data['all_done']
         deck_num = data['deck_num']
         lift.y = data['lift.y']
-        clock.schedule_unique(SaveMenu.autosave, AUTOSAVE_INTERVAL)
 
 
 class SaveMenu(GameMenu):
@@ -1042,7 +1051,6 @@ class SaveMenu(GameMenu):
     def autosave():
         print("Auto-saving...")
         SaveMenu.save('Auto-save')
-        clock.schedule_unique(SaveMenu.autosave, AUTOSAVE_INTERVAL)
 
     @staticmethod
     def save(name):
@@ -1089,6 +1097,7 @@ def start_ending():
 
 
 class IntroScreen:
+    MUSIC = 'deck1'
     def __init__(self):
         self.intro = Actor('intro', topleft=(0, 50))
         self.ship_images = cycle(['ship1', 'ship2', 'ship3'])
@@ -1105,7 +1114,7 @@ class IntroScreen:
         clock.schedule_interval(self.update_moon, 0.3)
         clock.schedule_unique(self.next_text, 5)
         self.next_text()
-        music.play('deck1')
+        music.play(self.MUSIC)
         billy.dialogue_with = billy.dialogue_menu = self
 
     def update_ship(self):
@@ -1193,6 +1202,7 @@ class Ending(IntroScreen):
             "Manx and Kibble were each jailed for 12 years.",
         ]
     }
+    MUSIC = 'outtro'
 
     def __init__(self, whodunnit):
         self.texts = self.TEXTS[whodunnit]
@@ -1214,7 +1224,6 @@ def game_over(whodunnit):
 
 
 
-clock.schedule_unique(SaveMenu.autosave, AUTOSAVE_INTERVAL)
 try:
     LoadMenu.load('Auto-save')
 except IOError:

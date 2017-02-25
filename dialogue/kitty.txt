@@ -1,8 +1,6 @@
 [enter]
 YOU: Hello, madam.
 THEY: Hey up. How can I 'elp ya?
-
-[Death]
 YOU: I'm afraid there's been a death on board.
 THEY: Golly!
 YOU: It's a Mr. Baines.
@@ -12,6 +10,9 @@ THEY: I do know 'im! Me an' 'im have been talking a lot. I was getting fond
       of 'im.
 THEY: Oh, heck, that's so sad... so sad... *sniff*
 LEARN: .knows
+
+[enter] if .knows
+YOU: Hello again, madam.
 
 
 [Buster Baines] if .knows
@@ -79,10 +80,19 @@ LEARN: Kitty worked for Cheshire
 YOU: What do you think this thing is?
 THEY: Odd... I think I've seen it before. I read the newspapers. Perhaps
       they've covered it.
+LEARN: .statue
 
 
-[Statue] if Kitty worked for Cheshire
+[Statue]? if .statue and Kitty worked for Cheshire
 YOU: Could you take a look again at this statue?
+THEY: I remember this! It was in Lord Cheshire's study.
+
+      I used to dust it. Ugly thing!
+LEARN: Cheshire owned statue
+
+
+[Statue]? if Kitty worked for Cheshire
+YOU: Have you seen this statue before?
 THEY: I remember this! It was in Lord Cheshire's study.
 
       I used to dust it. Ugly thing!

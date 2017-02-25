@@ -50,7 +50,7 @@ THEY: "I must see you again!"? This is... I don't believe this is addressed
 [Note] if Kitty Morgan
 YOU: I think this note might be addressed to you?
 THEY: "I must see you again!"? You are mistaken, sir. This is not to me.
-YOU: Ah, then I know it is addressed to.
+YOU: Ah, then I know who it is addressed to.
 
 
 [Doctor] if .knowsBB
@@ -100,11 +100,18 @@ LEARN: Long-time snorer
 
 [Statue]?
 YOU: Have you seen this statue?
-THEY: Where did you get this? I've not seen it. No. I know nothing about it.
+THEY: Where did you get this? I've not seen it.
+
+      I... know nothing about it.
+
+      Perhaps I could take a closer look?
+YOU: I'm afraid it may be a clue to the reason behind Baines' death.
+
+     Perhaps you'll be able to see it when I've got to the bottom of this.
 
 
 [Statue]? if .speciality
-YOU: So you know what this statue is?
+YOU: So you do know what this statue is?
 THEY: It's Bastet, of course. Egyptian goddess. This is an original idol, from
       the early second dynasty!
 THEY: Perhaps I could hold onto it for a more detailed study?

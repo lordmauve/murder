@@ -7,6 +7,7 @@ YOU: Madam... I'm afraid one of the guests has died.
 THEY: Oh my goodness! Who?
 YOU: A Mr. Buster Baines.
 THEY: That name doesn't ring a bell.
+LEARN: .told
 
 
 [Texan]?
@@ -15,7 +16,7 @@ THEY: Now I have seen a man in a Texan hat around. Perhaps that's him.
 LEARN: .knows
 
 
-[enter] if .knows
+[enter] if .told
 YOU: Hello again, madam.
 
 
@@ -98,8 +99,8 @@ LEARN: Calico told Manx
 
 
 [Barman] if Sleeping pills, Kibble accused
-YOU: The barman?
-THEY: The one over there.
+YOU: The barman gave you sleeping pills?
+THEY: The one over there, serving drinks in the lounge.
 LEARN: Kibble gave Mrs Manx pills
 
 

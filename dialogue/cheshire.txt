@@ -38,8 +38,8 @@ LEARN: Hotel
 [About yourself]
 YOU: What is it that you do, your lordship?
 THEY: What I do?
-YOU: You work?
-THEY: Oh, not as such. I'm more of an entrepreneur, an investor.
+YOU: Your work?
+THEY: Oh, I don't "work" as such. I'm more of an entrepreneur, an investor.
 
       That, of course, and I dip my nose in at Westminster when I'm in town.
 
