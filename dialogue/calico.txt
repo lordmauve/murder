@@ -14,6 +14,11 @@ YOU: What can you tell me about the dead man, Baines?
 THEY: American. Always wore a hat. That's all I know.
 
 
+[KM]?
+YOU: Have you any idea who KM might be?
+THEY: Come on, Billy. I don't want to play yer stupid detective games.
+
+
 [Smoking]?
 YOU: Do you smoke?
 THEY: I do, sometimes, yes. Up on deck. Got a problem with that?

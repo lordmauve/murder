@@ -62,6 +62,13 @@ THEY: Dr. Manx's cabin is number 36.
 
    Ms. Morgan's is... number 46.
 LEARN: Kitty Morgan
+FORGET: KM
+
+
+[Statue]?
+YOU: I found this statue in Baines' luggage.
+THEY: Oh? It's a bit improper to open his luggage, but if you get useful
+      information out of it, then I don't mind.
 
 
 [I know what happened] if Manx accused, Kibble accused, Kibble gave Mrs Manx pills

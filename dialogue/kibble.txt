@@ -11,6 +11,12 @@ LEARN: .knows
 THEY: Back again are ya?
 
 
+[About yourself]
+YOU: How life, Donnie?
+THEY: Tell the truth, I'm fed up of the ship life, I am.
+      I'm thinking of walkin' when we get back to London.
+
+
 [Buster Baines]
 YOU: Did you know Buster Baines?
 THEY: I know all the guests, yeah.
@@ -22,6 +28,16 @@ LEARN: .knowsBB
 [Last Seen]
 YOU: When did you last see Baines?
 THEY: Earlier, I guess, at the bar.
+
+
+[Kitty Morgan]?
+YOU: Do you know Kitty Morgan?
+THEY: Yeah, I do a bit. Mind your own business.
+
+
+[Pussy Galumps]?
+YOU: I see you've met Pussy Galumps.
+THEY: I've met everybody.
 
 
 [Smoking]?
@@ -58,9 +74,9 @@ YOU: Wow.
 LEARN: Guest's revenge
 
 
-[Kitty Morgan]?
-YOU: Do you know Kitty Morgan?
-THEY: Yeah, I do a bit. Mind your own business.
+[KM]?
+YOU: Have you any idea who KM might be?
+THEY: Isn't it that Doctor fellow?
 
 
 [Kitty Morgan] if Donnie/Kitty
@@ -85,6 +101,9 @@ YOU: Did you want to get Baines out of the way? So you could have Kitty to
 THEY: I didn't bloody kill him though!
 LEARN: Kibble accused
 
+[Statue]?
+YOU: Have you seen this statue before?
+THEY: No. Where d'you get it? Looks pretty flash. Probably worth a penny.
 
 [Bye]
 YOU: Thanks.

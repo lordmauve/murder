@@ -164,12 +164,12 @@ def load_dialogue(fname):
             mo = re.match('^([A-Z]+): *(.*)', l)
             if mo:
                 action, value = mo.groups()
-                if action not in ('YOU', 'THEY', 'EXIT', 'LEARN', 'EXEC'):
+                if action not in ('YOU', 'THEY', 'EXIT', 'LEARN', 'FORGET', 'EXEC'):
                     raise ValueError(
                         'invalid key %r, %s, line %d' % (action, path, lineno)
                     )
                 value = value.strip()
-                if action == 'LEARN' and value.startswith('.'):
+                if action in ('LEARN', 'FORGET') and value.startswith('.'):
                     value = fname + value
                 steps.append((action, value))
             else:
@@ -854,11 +854,13 @@ class DialogueChat:
             if action == 'LEARN':
                 things_known.add(text)
                 continue
-            if action == 'EXEC':
+            elif action == 'FORGET':
+                things_known.discard(text)
+                continue
+            elif action == 'EXEC':
                 exec(text, globals())
                 continue
-
-            if action in ('YOU', 'THEY'):
+            elif action in ('YOU', 'THEY'):
                 self.action, self.text = action, text
             break
 

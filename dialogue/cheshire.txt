@@ -35,6 +35,20 @@ LEARN: Texan
 LEARN: Hotel
 
 
+[Doctor Manx]
+YOU: Have you had any contact with Doctor Manx?
+THEY: Other than pleasantries at the bar, no.
+
+
+[Mrs. Manx]
+YOU: What can you tell me about Mrs. Manx?
+THEY: I have the cabin next to the Manx's. How does she put up with his
+      snoring?
+
+      Honestly, it's keeping me awake at night.
+LEARN: Snoring
+
+
 [Last Seen] if .KnowsBB
 YOU: When was the last time you saw Mr. Baines?
 THEY: I saw him here at... say, around six-fifteen.
@@ -46,6 +60,15 @@ THEY: I saw him here at... say, around six-fifteen.
 [Cards]?
 YOU: You play cards?
 THEY: I'm a sucker for a game of poker, I'm afraid.
+
+
+[KM]?
+YOU: Do you know who KM might be?
+THEY: Hmm... KM... there's a great cocktail called a "Kicking Mickey".
+
+      It's gin, brandy and bitters, if I recall.
+YOU: Thats... not what I'm looking for.
+THEY: Ok, that makes one of us.
 
 
 [Statue]? if .KnowsBB

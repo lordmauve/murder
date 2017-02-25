@@ -9,6 +9,7 @@ YOU: "KM,
 
    BB"
 YOU: I wonder who KM is.
+LEARN: KM
 LEARN: Note
 EXIT:
 

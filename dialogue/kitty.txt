@@ -26,6 +26,23 @@ THEY: I can't believe 'e's dead... *sniff*
 LEARN: Luggage
 
 
+[Doctor Manx]
+YOU: Do you know Doctor Manx?
+THEY: No.
+
+
+[Donnie Kibble]
+YOU: Do you know Donnie Kibble?
+THEY: Yeah, I've chatted to 'im all right. E's nice too.
+LEARN: .donnie
+
+
+[Donnie Kibble] if .donnie, Donnie/Kitty
+YOU: Has Donnie make... advances towards you?
+THEY: I don't think so. Do you think he is interested?
+YOU: You will have to ask him that.
+
+
 [Note] if Note, .knows
 YOU: I found this note: "KM, meet me..." See?
 THEY: Oh, the poor man.

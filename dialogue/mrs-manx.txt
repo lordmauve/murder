@@ -19,6 +19,25 @@ LEARN: .knows
 YOU: Hello again, madam.
 
 
+[About yourself]
+YOU: Madam, why are you heading to New York?
+THEY: My husband is presenting at a symposium. I'm hoping to do some shopping
+      on 34th Street!
+YOU: What is it that you do?
+THEY: I am in fashion. I modelled for a while, but now I'm working as a
+      designer for a label. I like it well enough.
+
+
+[Katerina la Gata]
+YOU: What can you tell me about Katerina la Gata?
+THEY: Oh, I love her work! Have you seen it?
+
+
+[KM]?
+YOU: Have you any idea who KM might be?
+THEY: Those are my husband's initials!
+
+
 [Last Seen] if .knows
 YOU: When did you last see Mr. Baines?
 THEY: If it's the gentleman in the hat -- it was tonight at dinner. We sat
@@ -43,6 +62,11 @@ THEY: I had the barman find me some sleeping pills.
 LEARN: Sleeping pills
 
 
+[Statue]?
+YOU: Have you seen this statue before?
+THEY: No.
+
+
 [Lord Cheshire]?
 YOU: Have you met Lord Cheshire?
 THEY: No, but I've been hearing lots of gossip about him. How we's been linked
@@ -50,7 +74,7 @@ THEY: No, but I've been hearing lots of gossip about him. How we's been linked
 LEARN: .gossip
 
 
-[Gossip] if .gossip, Cheshire/Newspaper
+[Gossip] if .gossip, Cheshire/Pussy
 YOU: You read about Lord Cheshire in the newspaper?
 THEY: No, I actually heard about it from the lady who makes up our cabin.
 LEARN: Calico talks

@@ -18,10 +18,42 @@ THEY:
    I just love watching the moonlight glisten on the water. I want to paint it!
 
 
+[About yourself]
+YOU: Madam, I've heard you're an artist.
+THEY: I paint. I express emotion with my paint. I make my canvas a mirror for
+      my soul.
+
+      If you think it's art, I'm happy.
+
+
+
 [Buster Baines]
 YOU: Did you see Mr. Baines?
-THEY: Maybe, jes -- he passed here just after sunset.
+THEY: Maybe, jes -- he passed here just after dinner.
 LEARN: Was on deck
+
+
+[Calico Croker]?
+YOU: Do you know the housekeeper, Calico Croker?
+THEY: She's come in to make up my room. It's not like we've talked at all
+      though.
+LEARN: Calico doesn't talk to Katerina
+
+
+[Doctor Manx]
+YOU: What can you tell me about Doctor Manx?
+THEY: We have met at dinner. He's an art lover.
+
+      His wife is very interesting too! We spoke about how art influences
+      fashion, and fashion influences art.
+
+
+[Mrs. Manx]
+YOU: What can you tell me about Mrs. Manx?
+THEY: We got on very well. She was very flattering about my work. Apparently
+      she is working as a fashion designer.
+
+
 
 
 [Statue]?
@@ -36,11 +68,22 @@ THEY: The Egyptology professor, who is here with his wife.
 LEARN: Manx is an egyptologist
 
 
-[Calico Croker]?
-YOU: Do you know the housekeeper, Calico Croker?
-THEY: She's come in to make up my room. It's not like we've talked at all
-      though.
-LEARN: Calico doesn't talk to Katerina
+
+
+[Note]?
+YOU: Did you see who placed this note?
+
+     It would have been some time after dinner.
+THEY: I was not watching, sorry.
+
+      But as I told joo, the crew went by, and Señor Baines. And I think Miss
+      Galumps also took a walk.
+LEARN: Galumps note
+
+
+[KM]?
+YOU: Have you any idea who KM might be?
+THEY: I am sorry, no.
 
 
 [Bye]

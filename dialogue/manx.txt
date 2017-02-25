@@ -18,6 +18,16 @@ THEY: I have bumped into him during the dinners, yes. I can't say I know him...
       knew him... well.
 
 
+[Katerina la Gata]?
+YOU: What can you tell me about the artist, Señorita la Gata?
+THEY: We had quite a pleasant conversation at dinner last night.
+
+      We talked about art, and the history of art, and why people started
+      to create art in the first place.
+
+      She's a fascinating woman.
+
+
 [Last Seen] if .knowsBB
 YOU: When did you last see Mr Baines?
 THEY: Last night? Or perhaps the night before.
@@ -29,6 +39,20 @@ YOU: Sir, your wife says she saw Baines here.
 THEY: I'm sorry, then; perhaps I was not paying attention.
 
 
+[KM]?
+YOU: Have you any idea who KM might be?
+THEY: I am KM! Karl Manx!
+YOU: Have you seen this note?
+THEY: "I must see you again!"? This is... I don't believe this is addressed
+      to me.
+
+
+[Note] if Kitty Morgan
+YOU: I think this note might be addressed to you?
+THEY: "I must see you again!"? You are mistaken, sir. This is not to me.
+YOU: Ah, then I know it is addressed to.
+
+
 [Doctor] if .knowsBB
 YOU: I understand you're a doctor?
 
@@ -37,6 +61,19 @@ THEY: Ha, ha, ha!
 
       I'm not a medical doctor! I'm a Doctor of Anthropology.
 LEARN: Anthropology
+
+
+[Kitty Morgan]?
+YOU: Do you know Kitty Morgan?
+THEY: Never heard of her. Should I have?
+
+
+[Lord Cheshire]?
+YOU: What can you tell me about Lord Cheshire?
+THEY: He always seems to be in here, usually with a drink in his hand.
+
+      I'm also given to understand he's a gambler -- but I don't go in for
+      that kind of thing myself.
 
 
 [Anthropology?] if Anthropology

@@ -16,6 +16,17 @@ YOU: Did you know Buster Baines?
 THEY: I can't say I did.
 
 
+[About yourself]
+YOU: You live in New York, don't you?
+THEY: Born and raised!
+YOU: What were you doing in London?
+THEY: I was touring my act! You didn't hear?
+YOU: No.
+THEY: Well, maybe that's one reason it didn't go so well.
+
+      I've had great reviews on Broadway, but you Brits lack taste.
+
+
 
 [Lord Cheshire]
 YOU: Do you know Lord Cheshire?
@@ -39,7 +50,27 @@ THEY: ...That man is a loser!
       And now he's all over *her*!
 
 
-[Cheshire's business] if Pussy/Cheshire
+[Statue]?
+YOU: Have you seen this statue before?
+THEY: Darling, I'm not interested in your trinkets.
+
+
+[KM]?
+YOU: Have you any idea who KM might be?
+THEY: No, sorry.
+
+
+[Note]? if Galumps note
+YOU: Have you seen this note before?
+THEY: No. Is B.B. the dead man?
+
+
+[Statue]? if Cheshire/Pussy
+YOU: Have you seen this statue before?
+THEY: I think I saw that in Lord Cheshire's house.
+
+
+[Cheshire's business] if Cheshire/Pussy
 YOU: Do you know why Lord Cheshire is going to New York?
 THEY: He told me he had some sort of business deal with a Japanese, worth a
       whole bucket of money!
