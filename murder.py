@@ -827,6 +827,7 @@ class DialogueChat:
                 fontsize=20,
                 color=color
             )
+        print(self.text)
         screen.draw.text(
             self.text,
             topleft=(30, 250),
@@ -847,22 +848,26 @@ class DialogueChat:
         """Proceed to the next step."""
         while True:
             try:
-                self.action, self.text = self.steps.pop(0)
+                action, text = self.steps.pop(0)
             except IndexError:
                 self.parent.show()
                 return
-            if self.action == 'LEARN':
-                things_known.add(self.text)
+            if action == 'LEARN':
+                things_known.add(text)
                 continue
-            if self.action == 'EXEC':
-                exec(self.text, globals())
+            if action == 'EXEC':
+                exec(text, globals())
                 continue
+
+            if action in ('YOU', 'THEY'):
+                self.action, self.text = action, text
             break
 
-        if self.action == 'EXIT' and billy.dialogue_menu is self:
-            billy.dialogue_menu = None
-            billy.dialogue_with = None
-            clear_text_area()
+        if action == 'EXIT':
+            if billy.dialogue_menu is self:
+                billy.dialogue_menu = None
+                billy.dialogue_with = None
+                clear_text_area()
         else:
             self.draw()
 
@@ -1059,7 +1064,7 @@ class SaveMenu(GameMenu):
 
 
 def start_ending():
-    global current_deck
+    global current_deck, viewport
     current_deck = Actor('deck2')
     current_deck.name = "Lounge"
     current_deck.actors = [
@@ -1075,6 +1080,7 @@ def start_ending():
     billy.image = 'billy-standing'
     kitty.image = 'kitty-morgan'
     billy.real_x = 475
+    viewport = 0, viewport[1]
     clock.unschedule(SaveMenu.autosave)
     draw_deck()
     billy.dialogue_with = captain
