@@ -24,6 +24,25 @@ THEY: Maybe, jes -- he passed here just after sunset.
 LEARN: Was on deck
 
 
+[Statue]
+YOU: Can you tell me about this statue?
+THEY: It is beautiful!
+
+      I love the ruby eyes. So intense! The eyes of a goddess! Sparkling with
+      majesty.
+THEY: Have you shown it to the Egyptologist?
+YOU: The Egyptologist?
+THEY: The Egyptology professor, who is here with his wife.
+LEARN: Manx is an egyptologist
+
+
+[Calico Croker]?
+YOU: Do you know the housekeeper, Calico Croker?
+THEY: She's come in to make up my room. It's not like we've talked at all
+      though.
+LEARN: Calico doesn't talk to Katerina
+
+
 [Bye]
 THEY: See you later, señor.
 EXIT:

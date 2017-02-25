@@ -5,6 +5,8 @@ YOU: It's titled "Bill of Sale".
 
      Ah, one Egyptian statuette.
 
+     There's a price... that's a lot of zeroes.
+
      It's signed by Cheshire and Baines.
-LEARN: Bill of sale
+LEARN: Bill of Sale
 EXIT:

@@ -9,7 +9,8 @@ YOU: "Archeologists believe ancient Mediterranean peoples may have believed
      "Professor Cohen believes new finds in Greece may provide the crucial
      evidence."
 
-     "The discovery would turn our view of ancient history on its head."
+     "The discovery would turn our view of ancient history on its head and
+     surely bag a knighthood for whoever can prove it."
 LEARN: Archeological theory
 
 

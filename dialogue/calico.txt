@@ -5,6 +5,10 @@ YOU: A Buster Baines.
 THEY: Oh, 'im. Thirty-five.
 LEARN: .knows
 
+[Buster Baines]?
+YOU: What can you tell me about the dead man, Baines?
+THEY: American. Always wore a hat. That's all I know.
+
 
 [Smoking]?
 YOU: Do you smoke?
@@ -34,25 +38,28 @@ LEARN: Donnie/Kitty
 YOU: What do you talk about on these smoke breaks?
 THEY: Nothing much. Bit of gossip.
 YOU: Anything in particular?
-THEY: Did you know, that Mrs. Manx, she used to be a fashion model?
+THEY: Did you know, that the wife of that Egyptologist, she used to be a
+      fashion model?
+LEARN: Calico knows Manx is an Egyptologist
 
 
-[Statue] if Pussy didn't steal, Bill of Sale
+[Statue]? if Pussy didn't steal, Bill of Sale
 YOU: Donnie told me that you overheard Ms. Galumps talking about a statue?
-THEY: That loud-mouth. So what if I did?
-YOU: I think you plotted to steal it.
+THEY: That loud-mouth. So what if I did? I overhear a lot of things.
+
+
+[Statue]? if Calico told Manx, Calico knows Manx is an Egyptologist, Bill of Sale, Archeological theory
+YOU: I think you plotted to steal the statue.
+
+     You heard Pussy talking about how valuable it was.
 
      You have access to all the rooms. You found Cheshire's copy of the Bill of
-     Sale and discovered that it was transferred to Baines.
-
-     So you poisoned him in order to take it.
-THEY: How dare you! I did no such thing.
-LEARN: .denial
-
-
-[enter] if .denial
-THEY: How dare you accuse me of murder!
-
+     Sale: you knew how much it was worth.
+YOU: But to cover your tracks, you "told" Doctor Manx about it, by gossiping
+     loudly -- hoping he would do the leg-work of obtaining it.
+THEY: You can't prove any of that.
+LEARN: Calico plot
+EXIT:
 
 [Bye]
 THEY: If that's all, I got work to do.

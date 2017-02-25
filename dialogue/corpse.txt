@@ -3,4 +3,8 @@ YOU:
    I've... never seen a body before.
 
    He looks... so inanimate.
+
+   I'd better investigate.
+YOU: There's nothing in his pockets except a key.
+LEARN: Luggage key
 EXIT:

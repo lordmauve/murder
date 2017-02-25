@@ -393,7 +393,7 @@ deck1.objects = [
 ]
 deck2.objects = [Lift()]
 deck3_start.objects = [
-    Lift(must_know={'Two Glasses'}),
+    Lift(must_know={'Two Glasses', 'Luggage key'}),
     Door(310, baines_room, 55, must_know={'Buster Baines'}),
 ]
 deck3.objects = [

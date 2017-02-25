@@ -35,22 +35,22 @@ YOU: I understand you're a doctor?
      Perhaps you could take a look at the victim.
 THEY: Ha, ha, ha!
 
-      I'm not a medical doctor.
-
-      I study what it is to be, or not be, and why. I'm very well known in
-      the field. I chair the RMS, in fact!
-LEARN: RMS
+      I'm not a medical doctor! I'm a Doctor of Anthropology.
+LEARN: Anthropology
 
 
-[RMS]?
-YOU: What is the RMS?
-THEY: A science, sir, a science! And an art. And above all, a philosophy!
+[Anthropology?] if Anthropology
+YOU: What is anthropology?
+THEY: From the Greek "anthropos", meaning man. I study humanity.
 
-      To know *why*. *WHY!*
 
-      Tell me, have you ever thought about *why it is*?
-YOU: Why what is?
-THEY: Yes!
+[Egyptology] if Anthropology, Manx is an egyptologist
+YOU: Someone told me you're an Egyptologist?
+THEY: No, I'm an *Anthropologist*.
+
+      Egypt is just my current speciality. I've been writing a paper on belief
+      systems in ancient Egypt.
+LEARN: .speciality
 
 
 [Snoring]?
@@ -64,6 +64,29 @@ LEARN: Long-time snorer
 [Statue]?
 YOU: Have you seen this statue?
 THEY: Where did you get this? I've not seen it. No. I know nothing about it.
+
+      It's Bastet, of course.
+LEARN: .bastet
+
+
+[Archeological Theory]? if .bastet and .speciality
+YOU: What do you think about Cohen's theory that ancient Egyptians worshipped
+     humans?
+THEY: That is *my* theory! Cohen is trying to cash in on my big idea, with all
+      this press and expeditions.
+
+      It's *my* lifetime's work and I will not see him swoop in and steal the
+      glory!
+
+
+[Calico Croker]?
+YOU: Do you know the housekeeper, Calico Croker?
+THEY: No.
+
+
+[Calico Croker] if Calico plot
+YOU: The housekeeper, Calico Croker, played you.
+THEY: I don't know what you're talking about, sir.
 
 
 [Bye]

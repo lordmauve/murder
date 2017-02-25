@@ -28,17 +28,6 @@ LEARN: Napkin
 LEARN: Mrs Manx saw Baines
 
 
-[RMS]?
-YOU: Can you describe, in layman's terms, what your husband does?
-THEY: He chairs the Royal Metaphysical Society.
-
-      I don't know exactly what they do, but it's all to do with being, and
-      belief, and the cosmos.
-YOU: Philosophy?
-THEY: Yes, but also man's place in the cosmos -- religion. Anthropology.
-LEARN: Royal Metaphysical Society
-
-
 [Snoring] if Long-time snorer
 YOU: How do you put up with your husband's snoring?
 THEY: I usually sleep in another room.
@@ -67,8 +56,19 @@ LEARN: Calico talks
 
 [Calico Croker]?
 YOU: Do you know the housekeeper, Calico Croker?
-THEY: Oh, that woman! She talks and talks, doesn't she?
+THEY: Oh, that woman! She talks and talks, doesn't she? She's quite the gossip.
 LEARN: Calico talks
+
+
+[Calico Croker]? if Calico talks, Calico doesn't talk to Katerina, Calico doesn't talk to Cheshire, Calico doesn't talk to Pussy
+YOU: You say Calico Croker talks to you? What about?
+THEY: Stories. Other guests.
+
+      Apparently the Captain may be getting a divorce!
+
+      And Lord Cheshire lost a priceless antique in a game of cards the
+      other night!
+LEARN: Calico told Manx
 
 
 [Barman] if Sleeping pills

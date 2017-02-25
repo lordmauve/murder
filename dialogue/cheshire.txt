@@ -97,7 +97,6 @@ THEY: It's devastating to have lost it. I mean, it's not the expense -- though
 
       But no, I imagine the deal will fall through now. That's the rub!
 LEARN: Statue importance
-LEARN: Statue value
 
 
 [Cheshire's Cabin]?
@@ -138,6 +137,12 @@ THEY: Oh, well... Pussy's a lovely girl. We had dinner a couple of times back
       But Katerina is a dream, an angel, a treasure.
 THEY: If you see her, will you tell her I said, "Hi!".
 LEARN: Pussy jilted
+
+
+[Calico Croker]?
+YOU: Do you know the housekeeper, Calico Croker?
+THEY: Only because she's been into my cabin. Quiet type?
+LEARN: Calico doesn't talk to Cheshire
 
 
 [Bye]
