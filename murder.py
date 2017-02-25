@@ -225,8 +225,8 @@ luggage_room.name = "Luggage Room"
 kitty_room = Actor('kitty-room')
 kitty_room.name = "Cabin 46"
 
-kitty = Actor('kitty-morgan', anchor=CANC)
-kitty.real_x = 100
+kitty = Actor('kitty-sitting', anchor=CANC)
+kitty.real_x = 300
 kitty.name = "Kitty Morgan"
 
 cheshire = Actor('lord-cheshire', anchor=CANC)
@@ -1032,6 +1032,7 @@ def start_ending():
     kibble.image = 'donnie-end'
     cheshire.image = 'lord-cheshire-end'
     billy.image = 'billy-standing'
+    kitty.image = 'kitty-morgan'
     billy.real_x = 475
     billy.dialogue_with = captain
     clock.unschedule(SaveMenu.autosave)
