@@ -35,12 +35,21 @@ LEARN: Texan
 LEARN: Hotel
 
 
-[Doctor Manx]
+[About yourself]
+YOU: What is it that you do, your lordship?
+THEY: What I do?
+YOU: You work?
+THEY: Oh, not as such. I'm more of an entrepreneur, an investor.
+
+      That, of course, and I dip my nose in at Westminster when I'm in town.
+
+
+[Doctor Manx]?
 YOU: Have you had any contact with Doctor Manx?
 THEY: Other than pleasantries at the bar, no.
 
 
-[Mrs. Manx]
+[Mrs. Manx]?
 YOU: What can you tell me about Mrs. Manx?
 THEY: I have the cabin next to the Manx's. How does she put up with his
       snoring?
@@ -128,9 +137,10 @@ THEY: I'm in 37, next to that awful snorer Manx.
 LEARN: Snoring
 LEARN: Cheshire's Room
 
-[Pussy Galumps]
+
+[Pussy Galumps]?
 YOU: Do you know Ms. Galumps?
-THEY: I know her well.
+THEY: I know her well. "Pussy" isn't her real name, of course.
 
 
 [Pussy Galumps] if Cheshire/Pussy

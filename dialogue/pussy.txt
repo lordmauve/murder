@@ -27,8 +27,7 @@ THEY: Well, maybe that's one reason it didn't go so well.
       I've had great reviews on Broadway, but you Brits lack taste.
 
 
-
-[Lord Cheshire]
+[Lord Cheshire]?
 YOU: Do you know Lord Cheshire?
 THEY: I'm fed up of you people sticking your noses into my private life.
 
@@ -77,7 +76,7 @@ THEY: He told me he had some sort of business deal with a Japanese, worth a
 LEARN: .business
 
 
-[Katerina la Gata]
+[Katerina la Gata]?
 YOU: Do you know Katerina la Gata?
 THEY: Apparently, she's "angelic". No. I do not know her and I don't want to.
 

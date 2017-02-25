@@ -28,7 +28,7 @@ THEY: I am in fashion. I modelled for a while, but now I'm working as a
       designer for a label. I like it well enough.
 
 
-[Katerina la Gata]
+[Katerina la Gata]?
 YOU: What can you tell me about Katerina la Gata?
 THEY: Oh, I love her work! Have you seen it?
 

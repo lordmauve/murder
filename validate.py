@@ -6,6 +6,18 @@ from pathlib import Path
 
 dialogue = Path('dialogue')
 
+characters = {
+    'Calico Croker',
+    'Lord Cheshire',
+    'Pussy Galumps',
+    'Donnie Kibble',
+    'Doctor Manx',
+    'Mrs. Manx',
+    'Katerina la Gata',
+    'Kitty Morgan',
+    'The Captain'
+}
+
 
 choices = {}
 predicates = {}
@@ -29,6 +41,8 @@ for f in dialogue.glob('*.txt'):
                     if t.startswith('.'):
                         t = name + t
                     cond.add(t)
+            if key in characters and not cond:
+                print('No ? for [{}] at {}, line {}'.format(key, name, lineno))
             choices.setdefault(name, set()).add(key)
             predicates[name, lineno] = cond
 
@@ -38,19 +52,6 @@ for f in dialogue.glob('*.txt'):
             if fact.startswith('.'):
                 fact = name + fact
             learn[name, lineno] = fact
-
-
-characters = {
-    'Calico Croker',
-    'Lord Cheshire',
-    'Pussy Galumps',
-    'Donnie Kibble',
-    'Doctor Manx',
-    'Mrs. Manx',
-    'Katerina la Gata',
-    'Kitty Morgan',
-    'The Captain'
-}
 
 
 learnable_set = set(learn.values()) | characters | {'Lift',}

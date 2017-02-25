@@ -33,14 +33,26 @@ THEY: Maybe, jes -- he passed here just after dinner.
 LEARN: Was on deck
 
 
+[Lord Cheshire]?
+YOU: What can you tell me about Lord Cheshire?
+THEY: He is a fascinating man. He is... how you say... charming. I like him a
+      lot.
+
+
+[Lord Cheshire] if Cheshire/Katerina
+YOU: Are you in a relationship with Lord Cheshire?
+THEY: I do not know if you would call it that. But I am looking forward to
+      spending more time with him in New York.
+
+
 [Calico Croker]?
 YOU: Do you know the housekeeper, Calico Croker?
-THEY: She's come in to make up my room. It's not like we've talked at all
-      though.
+THEY: She has come in to make up my room. She has not said a word to me though,
+      so I cannot help joo.
 LEARN: Calico doesn't talk to Katerina
 
 
-[Doctor Manx]
+[Doctor Manx]?
 YOU: What can you tell me about Doctor Manx?
 THEY: We have met at dinner. He's an art lover.
 
@@ -48,12 +60,10 @@ THEY: We have met at dinner. He's an art lover.
       fashion, and fashion influences art.
 
 
-[Mrs. Manx]
+[Mrs. Manx]?
 YOU: What can you tell me about Mrs. Manx?
 THEY: We got on very well. She was very flattering about my work. Apparently
       she is working as a fashion designer.
-
-
 
 
 [Statue]?

@@ -26,12 +26,12 @@ THEY: I can't believe 'e's dead... *sniff*
 LEARN: Luggage
 
 
-[Doctor Manx]
+[Doctor Manx]?
 YOU: Do you know Doctor Manx?
 THEY: No.
 
 
-[Donnie Kibble]
+[Donnie Kibble]?
 YOU: Do you know Donnie Kibble?
 THEY: Yeah, I've chatted to 'im all right. E's nice too.
 LEARN: .donnie
@@ -41,6 +41,14 @@ LEARN: .donnie
 YOU: Has Donnie make... advances towards you?
 THEY: I don't think so. Do you think he is interested?
 YOU: You will have to ask him that.
+
+
+[Pussy Galumps]?
+YOU: What can you tell me about Pussy Galumps?
+THEY: I saw her show in London...
+
+      I didn't like it much.
+THEY: Why, is she on board?
 
 
 [Note] if Note, .knows
