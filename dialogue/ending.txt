@@ -5,7 +5,7 @@ THEY: Thanks for coming.
       Mr. Baines' untimely death.
 
       Billy, please, go on.
-
+EXEC: billy.image = 'billy-standing-l'
 YOU: Buster Baines was murdered by people on this ship.
 
      The reason involves love, money, and reputation.

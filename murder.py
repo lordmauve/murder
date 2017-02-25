@@ -825,10 +825,10 @@ class DialogueChat:
                 continue
             if self.action == 'EXEC':
                 exec(self.text, globals())
-                return
+                continue
             break
 
-        if self.action == 'EXIT':
+        if self.action == 'EXIT' and billy.dialogue_menu is self:
             billy.dialogue_menu = None
             billy.dialogue_with = None
 
