@@ -52,6 +52,25 @@ THEY: I had the barman find me some sleeping pills.
 LEARN: Sleeping pills
 
 
+[Lord Cheshire]?
+YOU: Have you met Lord Cheshire?
+THEY: No, but I've been hearing lots of gossip about him. How we's been linked
+      to her or her or her..
+LEARN: .gossip
+
+
+[Gossip] if .gossip and Cheshire/Newspaper
+YOU: You read about Lord Cheshire in the newspaper?
+THEY: No, I actually heard about it from the lady who makes up our cabin.
+LEARN: Calico talks
+
+
+[Calico Croker]?
+YOU: Do you know the housekeeper, Calico Croker?
+THEY: Oh, that woman! She talks and talks, doesn't she?
+LEARN: Calico talks
+
+
 [Barman] if Sleeping pills
 YOU: The barman?
 THEY: The one over there.

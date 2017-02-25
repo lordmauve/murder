@@ -5,8 +5,6 @@ YOU: A Buster Baines.
 THEY: Oh, 'im. Thirty-five.
 LEARN: .knows
 
-[Last Seen]
-YOU:
 
 [Smoking]?
 YOU: Do you smoke?
@@ -19,6 +17,7 @@ YOU: Do you smoke alone, or with other crew members? Donnie, perhaps.
 THEY: Sure, Donnie and I go on smoke breaks.
 LEARN: Smoke breaks
 
+
 [Donnie Kibble] if Smoke breaks
 YOU: What can you tell me about Donnie Kibble?
 THEY: Oh, he's just a lad, really. We talk about ship life, gossip.
@@ -29,6 +28,30 @@ THEY: Oh, he's just a lad, really. We talk about ship life, gossip.
       Well, good luck to him. Worst what can 'appen is that he's given the
       boot.
 LEARN: Donnie/Kitty
+
+
+[Smoke breaks]?
+YOU: What do you talk about on these smoke breaks?
+THEY: Nothing much. Bit of gossip.
+YOU: Anything in particular?
+THEY: Did you know, that Mrs. Manx, she used to be a fashion model?
+
+
+[Statue] if Pussy didn't steal, Bill of Sale
+YOU: Donnie told me that you overheard Ms. Galumps talking about a statue?
+THEY: That loud-mouth. So what if I did?
+YOU: I think you plotted to steal it.
+
+     You have access to all the rooms. You found Cheshire's copy of the Bill of
+     Sale and discovered that it was transferred to Baines.
+
+     So you poisoned him in order to take it.
+THEY: How dare you! I did no such thing.
+LEARN: .denial
+
+
+[enter] if .denial
+THEY: How dare you accuse me of murder!
 
 
 [Bye]

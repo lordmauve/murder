@@ -61,6 +61,11 @@ THEY: Nothing to be done about that, I'm afraid.
 LEARN: Long-time snorer
 
 
+[Statue]?
+YOU: Have you seen this statue?
+THEY: Where did you get this? I've not seen it. No. I know nothing about it.
+
+
 [Bye]
 YOU: Thank you for your time.
 THEY: That's quite all right.

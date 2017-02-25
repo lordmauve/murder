@@ -92,8 +92,12 @@ THEY: It was going to be a gift, to an Oriental businessman I'm meeting in New
       I have a business venture, you see -- we're planning to sell them
       telephony equipment, actually -- and apparently a gift is the fashion
       among the Nipponese.
-THEY: It's devastating to have lost it. I imagine the whole thing will fall
-      through now.
+THEY: It's devastating to have lost it. I mean, it's not the expense -- though
+      that does pinch, it's true: the thing was worth a fortune.
+
+      But no, I imagine the deal will fall through now. That's the rub!
+LEARN: Statue importance
+LEARN: Statue value
 
 
 [Cheshire's Cabin]?

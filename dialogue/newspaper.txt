@@ -1,12 +1,25 @@
 [Headlines]
 YOU: The headline is about the economy. The Banks are warning about a downturn.
 
-[Gossip]
+
+[Features Section]
+YOU: "Archeologists believe ancient Mediterranean peoples may have believed
+     humans were gods."
+
+     "Professor Cohen believes new finds in Greece may provide the crucial
+     evidence."
+
+     "The discovery would turn our view of ancient history on its head."
+LEARN: Archeological theory
+
+
+[Gossip Column]
 YOU: There's a story in the gossip column about Lord Cheshire
      and Pussy Galumps.
 
      According to this, they've been romantically linked.
 LEARN: Cheshire/Pussy
+
 
 [Done]
 EXIT:

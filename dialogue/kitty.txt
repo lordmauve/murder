@@ -17,7 +17,8 @@ THEY: Oh, the poor man was all "Howdy" and "Ahd shure like ter see yer agin".
 
       I think he was trying it on a bit.
 
-      I told him no. He told me he'd leave a note in a thingummy on deck.
+      I told him no. When I wouldn't tell him where my cabin was,
+      he told me he'd leave me notes in a thingummy on deck.
 
 
 [Newspaper]
@@ -38,7 +39,8 @@ LEARN: Kitty worked for Cheshire
 
 [Statue]?
 YOU: What do you think this thing is?
-THEY: Odd... I think I've seen it before. Might have been in the paper.
+THEY: Odd... I think I've seen it before. I read the newspapers. Perhaps
+      they've covered it.
 
 
 [Statue] if Kitty worked for Cheshire

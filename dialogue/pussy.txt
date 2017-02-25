@@ -56,8 +56,24 @@ YOU: You bear a grudge against Ms. la Gata?
 THEY: You bet I do!
 
       But it's *him* I resent. There, I said it!
-LEARN: .resent
+LEARN: .resents
 
+
+[Revenge] if .resents, Guest's revenge, Cheshire owned statue, .business, Statue importance
+YOU: You wanted revenge on Lord Cheshire?
+THEY: Oh, well... not really...
+YOU: I think you plotted to steal his Egyptian statue.
+
+     You knew about his business deal, and that statue would make-or-break it.
+
+     You plotted to steal the statue so that the deal would fail.
+THEY: Maybe I thought about it! But I didn't steal that statue! So no harm
+      done.
+YOU: A man is dead.
+THEY: Well, what's he got to do with this?
+YOU: He owned the statue. Lord Cheshire lost it to him in a card game.
+THEY: Oh, gosh. Look, I'm not involved in that, Ok?
+LEARN: Pussy didn't steal
 
 
 [Bye]

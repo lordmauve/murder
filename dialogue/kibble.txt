@@ -30,6 +30,33 @@ THEY: I nip up on deck for one every now and again, why?
 LEARN: Kibble smokes
 
 
+[Smoking] if Calico smokes, Kibble smokes
+YOU: Do you meet up with others when you smoke? Calico, perhaps.
+THEY: Yeah, she an' I go for a fag every now and again.
+LEARN: Smoke breaks
+
+
+[Calico Croker] if Smoke breaks
+YOU: What do you discuss on these smoke breaks?
+THEY: She tells me all the gossip.
+
+      She hears a lot, does Callie, what with going around all the guest rooms
+      making beds and what-have-you.
+LEARN: Calico Gossip
+
+
+[Gossip] if Calico Gossip
+YOU: Is there anything in particular you've heard recently?
+THEY: Oh, yeah! Calico told me that one of the guests was ranting to her about
+      being dumped. She's apparently going to nick something of his to get her
+      own back!
+
+      Can you believe it!? All this goes on under our noses.
+YOU: Wow.
+LEARN: Guest's revenge
+
+
+
 [Bye]
 YOU: Thanks.
 THEY: Yeah, well, do me a favour and leave me outta this, alright?
