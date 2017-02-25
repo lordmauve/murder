@@ -12,6 +12,8 @@ import datetime
 from pathlib import Path
 from collections import OrderedDict, defaultdict
 from abc import ABCMeta, abstractmethod
+import pygame.transform
+from itertools import cycle
 
 basedir = Path(pgzero.loaders.root)
 
@@ -272,6 +274,7 @@ billy = Actor(
 billy.real_x = 100
 billy.in_lift = False
 billy.dialogue_with = None
+billy.dir = None
 
 decks = [bridge, deck1, deck2, deck3, deck4]
 bridge.actors = [captain]
@@ -540,11 +543,23 @@ def update():
 def move_billy():
     global frame, viewport
     if keyboard.left:
-        billy.real_x = max(30, billy.real_x - MAX_WALK)
-        billy.image = 'billy-standing-l'
+        billy.real_x -= MAX_WALK
+        if billy.real_x < 30:
+            billy.real_x = 30
+            stop_billy_anim()
+        else:
+            play_billy_anim(billy_walk_l)
+            billy.dir = 'l'
     elif keyboard.right:
-        billy.real_x = min(current_deck.level_width - 30, billy.real_x + MAX_WALK)
-        billy.image = 'billy-standing-r'
+        billy.real_x += MAX_WALK
+        if billy.real_x >= current_deck.level_width - 30:
+            billy.real_x = current_deck.level_width - 30
+            stop_billy_anim()
+        else:
+            play_billy_anim(billy_walk_r)
+            billy.dir = 'r'
+    else:
+        stop_billy_anim()
 
     if current_deck.width > WIDTH:
         vx, vy = viewport
@@ -555,6 +570,43 @@ def move_billy():
         if billy.real_x < vx + l_edge:
             vx = max(billy.real_x - l_edge, 0)
         viewport = vx, vy
+
+
+billy_walk_r = [
+    images.billy_walking_r_0,
+    images.billy_walking_r_1,
+    images.billy_walking_r_2,
+    images.billy_walking_r_3,
+    images.billy_walking_r_4,
+    images.billy_walking_r_5,
+    images.billy_walking_r_6,
+    images.billy_walking_r_7,
+]
+billy_walk_l = [
+    pygame.transform.flip(im, True, False)
+    for im in billy_walk_r
+]
+billy.anim = None
+
+
+def play_billy_anim(frames):
+    if billy.anim is frames:
+        return
+    billy.anim = frames
+    billy.frames = cycle(frames)
+    next_frame()
+    clock.schedule_interval(next_frame, 0.07)
+
+
+def stop_billy_anim():
+    billy.anim = None
+    clock.unschedule(next_frame)
+    if billy.dir:
+        billy.image = 'billy-standing-' + billy.dir
+
+
+def next_frame():
+    billy.image = next(billy.frames)
 
 
 TWEEN = 'accel_decel'
@@ -590,6 +642,10 @@ def on_key_down_walk(key):
     else:
         if key == keys.UP:
             billy.image = 'billy-back'
+            billy.dir = None
+        elif key == keys.DOWN:
+            billy.image = 'billy-standing'
+            billy.dir = None
         elif key == keys.ESCAPE:
             show_menu()
 
