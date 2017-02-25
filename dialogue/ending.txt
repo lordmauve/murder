@@ -56,8 +56,7 @@ YOU: An erudite man, Mr. Karl Manx was enraged about his rival's discoveries
 YOU: Kibble's act, by contrast, was motivated by passion -- and while we cannot
      forgive Kibble, we can perhaps sympathise with his motives.
 YOU: Mr. Karl Manx's crime was worse.
-LEARN: I choose Manx
-EXEC: game_over()
+EXEC: game_over('Manx')
 EXIT:
 
 
@@ -68,8 +67,7 @@ YOU: Manx's act, was heinous, but done in pursuit of knowledge.
 
      We should not forget he was exploited by Croker in hope of her own gain.
 YOU: Mr. Kibble's crime was worse.
-LEARN: I choose Kibble
-EXEC: game_over()
+EXEC: game_over('Kibble')
 EXIT:
 
 
@@ -80,5 +78,5 @@ YOU: Neither crime is any worse than the other.
 
      Though neither knew of the other's plot, they must both be treated as
      conspirators in the murder.
-EXEC: game_over()
+EXEC: game_over('Both')
 EXIT:

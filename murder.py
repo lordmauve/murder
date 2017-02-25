@@ -13,7 +13,7 @@ from pathlib import Path
 from collections import OrderedDict, defaultdict
 from abc import ABCMeta, abstractmethod
 import pygame.transform
-from itertools import cycle
+from itertools import cycle, chain
 
 basedir = Path(pgzero.loaders.root)
 
@@ -827,7 +827,6 @@ class DialogueChat:
                 fontsize=20,
                 color=color
             )
-        print(self.text)
         screen.draw.text(
             self.text,
             topleft=(30, 250),
@@ -1120,8 +1119,9 @@ class IntroScreen:
         "A Death At Sea\n\nBy Daniel Pope",
         "The Atlantic, 1927",
         "S.S. Felicia",
-        "The Captain has just summoned\nthe porter, Billy, to Deck 3...",
+        "The Captain has just summoned\nme, the porter, to Deck 3...",
     ]
+    slide_time = 5
 
     def draw(self):
         if not self.drawn:
@@ -1150,7 +1150,7 @@ class IntroScreen:
             self.end()
         else:
             self.drawn = False
-            clock.schedule_unique(self.next_text, 5)
+            clock.schedule_unique(self.next_text, self.slide_time)
 
     def end(self):
         global game_screen
@@ -1169,6 +1169,47 @@ class IntroScreen:
     def up(self):
         """no-op"""
     down = up
+
+
+class Ending(IntroScreen):
+    TEXTS = {
+        'Kibble': [
+            "Kibble and Manx were confined to\nrooms for the rest of the voyage.",
+            "When we reached New York,\nI testified in their trial.",
+            "Donnie Kibble was jailed for 15 years.",
+            "Karl Manx received a 5 year prison sentence."
+        ],
+        'Manx': [
+            "Manx and Kibble were confined to\nrooms for the rest of the voyage.",
+            "When we reached New York,\nI testified in their trial.",
+            "Karl Manx was jailed for 15 years.",
+            "Donnie Kibble received a 7 year prison sentence."
+        ],
+        'Both': [
+            "Manx and Kibble were confined to\nrooms for the rest of the voyage.",
+            "When we reached New York,\nI testified in their trial.",
+            "Manx and Kibble were each jailed for 12 years.",
+        ]
+    }
+
+    def __init__(self, whodunnit):
+        self.texts = self.TEXTS[whodunnit]
+        super().__init__()
+
+    def end(self):
+        theend = 'The End'
+        spelling = [theend[:n] for n in range(len(theend) + 1)]
+        self.texts = spelling
+        self.itexts = iter(spelling)
+        clock.schedule_unique(self.next_text, 0.1)
+        self.slide_time = 0.1
+        self.end = lambda: None
+
+
+def game_over(whodunnit):
+    screen.clear()
+    Ending(whodunnit).show()
+
 
 
 clock.schedule_unique(SaveMenu.autosave, AUTOSAVE_INTERVAL)
