@@ -1092,6 +1092,7 @@ def start_ending():
     viewport = 0, viewport[1]
     clock.unschedule(SaveMenu.autosave)
     draw_deck()
+    music.play('reveal')
     billy.dialogue_with = captain
     DialogueChoices(load_dialogue('ending')).start()
 
