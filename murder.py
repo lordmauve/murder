@@ -470,9 +470,15 @@ def reload_dialogue():
 
 
 reload_dialogue()
+game_screen = None
 
+PANEL = Rect(0, 50, WIDTH, 145)
+BLACK = 0, 0, 0
 
 def draw():
+    if game_screen:
+        return game_screen.draw()
+
     screen.clear()
     if billy.in_lift:
         draw_lift()
@@ -536,7 +542,7 @@ def draw_caption(caption):
 
 
 def update():
-    if not billy.dialogue_with:
+    if not billy.dialogue_with and not game_screen:
         move_billy()
 
 
@@ -1039,11 +1045,79 @@ def start_ending():
     DialogueChoices(load_dialogue('ending')).start()
 
 
+class IntroScreen:
+    def __init__(self):
+        self.intro = Actor('intro', topleft=(0, 50))
+        self.ship_images = cycle(['ship1', 'ship2', 'ship3'])
+        self.moon_images = cycle(['moon1', 'moon2', 'moon3'])
+        self.ship = Actor('ship1', anchor=('right', 'center'), pos=(100, 140))
+        self.moon = Actor('moon1', topleft=(615, 147), anchor=('left', 'top'))
+        self.itexts = iter(self.texts)
+        self.drawn = False
+
+    def show(self):
+        global game_screen
+        game_screen = self
+        clock.schedule_interval(self.update_ship, 0.1)
+        clock.schedule_interval(self.update_moon, 0.3)
+        clock.schedule_interval(self.next_text, 5)
+        self.next_text()
+        music.play('deck1')
+
+    def update_ship(self):
+        self.ship.x += 1
+        if self.ship.x % 3 == 0:
+            self.ship.image = next(self.ship_images)
+
+    def update_moon(self):
+        self.moon.image = next(self.moon_images)
+
+
+    texts = [
+        "A Death At Sea\n\nBy Daniel Pope",
+        "The Atlantic, 1927",
+        "S.S. Felicia",
+        "The Captain has just summoned\nthe porter, Billy, to Deck 3...",
+    ]
+
+    def draw(self):
+        if not self.drawn:
+            screen.clear()
+        else:
+            screen.draw.filled_rect(PANEL, BLACK)
+        self.intro.draw()
+        self.moon.draw()
+        self.ship.draw()
+
+        if not self.drawn:
+            screen.draw.text(
+                self.text,
+                midtop=(WIDTH // 2, 350 - (self.text.count('\n') + 1) // 2 * 22),
+                fontname=FONT,
+                fontsize=22,
+                color='#cccccc',
+                align='center'
+            )
+            self.drawn = True
+
+    def next_text(self):
+        try:
+            self.text = next(self.itexts)
+            self.drawn = False
+        except StopIteration:
+            self.end()
+
+    def end(self):
+        global game_screen
+        music.stop()
+        game_screen = None
+
+
 clock.schedule_unique(SaveMenu.autosave, AUTOSAVE_INTERVAL)
 try:
     LoadMenu.load('Auto-save')
 except IOError:
-    pass
+    IntroScreen().show()
 
 
 #for t in sorted(things_known):
