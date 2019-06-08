@@ -1,3 +1,2 @@
 pygame==1.9.3
 pgzero==1.2
-pyyaml==3.12
